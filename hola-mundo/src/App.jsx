@@ -1,12 +1,12 @@
 import "./App.css";
-import BotonPrueba from "./components/BotonPrueba";
-import ListaDeUsuarios from "./components/ListaDeUsuarios";
+import ListaProductos from "./components/ListaProductos";
 
 function App() {
   return (
     <>
-      <ListaDeUsuarios />
-      <BotonPrueba texto="Texto del botón" color="blue" />
+      <ListaProductos
+        productos={["Agua", "Yerba", "Coca-Cola", "Fernet", "Galletitas"]}
+      />
     </>
   );
 }
