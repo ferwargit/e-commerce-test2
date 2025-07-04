@@ -1,4 +1,5 @@
 import "./App.css";
+import Boton from "./components/BotonPrueba";
 import ListaProductos from "./components/ListaProductos";
 import Tarjeta from "./components/Tarjeta";
 
@@ -13,6 +14,11 @@ function App() {
         descripcion="Aquí encontrarás los mejores productos."
         botonTexto="Comprar Ahora"
       />
+      <div>
+        <Boton texto="Agregar al Carrito" color="green" />
+        <Boton texto="Ver Detalles" color="blue" />
+        <Boton texto="Eliminar" color="red" />
+      </div>
     </>
   );
 }
