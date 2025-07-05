@@ -9,7 +9,13 @@ export default function Formulario() {
 
   // Función que maneja el envío del formulario y muestra una alerta con el nombre ingresado
   function manejarEnvio(evento) {
+    // Evita el comportamiento por defecto del formulario
+    // que recargaría la página al enviar
     evento.preventDefault();
+
+    console.log(evento); // Muestra el evento en la consola para depuración
+
+    // Muestra una alerta con el nombre ingresado
     alert(`Formulario enviado por: ${nombre}`);
     setNombre(""); // Limpia el input después de enviar
   }
