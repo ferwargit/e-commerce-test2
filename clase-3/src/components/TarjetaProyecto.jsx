@@ -4,9 +4,9 @@ import "../styles/tarjetaProyecto.css";
 function TarjetaProyecto({ titulo, descripcion, botonTexto }) {
   return (
     <div className="project-container">
-      <h2>{titulo}</h2>
+      <h2 className="project-title">{titulo}</h2>
       <p>{descripcion}</p>
-      <Boton texto={botonTexto} color="blue" />
+      <Boton titulo={titulo} texto={botonTexto} color="blue" />
     </div>
   );
 }
