@@ -8,6 +8,7 @@ import Main from "./components/Main";
 import Nav from "./components/Nav";
 import GaleriaIntereses from "./components/GaleriaIntereses";
 import Contador from "./components/Contador";
+import Boton2 from "./components/Boton2";
 
 const equipo = [
   {
@@ -54,6 +55,7 @@ function App() {
       />
       <GaleriaIntereses intereses={intereses} />
       <Contador />
+      <Boton2 />
     </>
   );
 }
