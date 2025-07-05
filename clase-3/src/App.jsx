@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import Nav from "./components/Nav";
 import GaleriaIntereses from "./components/GaleriaIntereses";
+import Contador from "./components/Contador";
 
 const equipo = [
   {
@@ -52,6 +53,7 @@ function App() {
         botonTexto="Explorar proyecto"
       />
       <GaleriaIntereses intereses={intereses} />
+      <Contador />
     </>
   );
 }
