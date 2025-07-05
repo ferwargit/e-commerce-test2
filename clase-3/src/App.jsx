@@ -1,5 +1,6 @@
 import "./App.css";
 import EquipoTalentoLab from "./components/EquipoTalentoLab";
+import TarjetaProyecto from "./components/TarjetaProyecto";
 import Footer from "./components/Footer";
 import Gallery from "./components/Gallery";
 import Header from "./components/Header";
@@ -42,6 +43,11 @@ function App() {
       {/* <Gallery /> */}
       {/* <Footer /> */}
       <EquipoTalentoLab equipo={equipo} />
+      <TarjetaProyecto
+        titulo="Plataforma de Gestión"
+        descripcion="Una herramienta para optimizar la gestión de equipos."
+        botonTexto="Explorar proyecto"
+      />
     </>
   );
 }
