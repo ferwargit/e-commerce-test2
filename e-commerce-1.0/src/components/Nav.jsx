@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Nav() {
   return (
     <nav style={{ backgroundColor: "#333", color: "white", padding: "10px" }}>
@@ -10,19 +12,25 @@ function Nav() {
         }}
       >
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <Link to="/" style={{ color: "white", textDecoration: "none" }}>
             Inicio
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
-            Acerca de
-          </a>
+          <Link
+            to="/productos"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Productos
+          </Link>
         </li>
         <li>
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
-            Contacto
-          </a>
+          <Link
+            to="/carrito"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            Carrito
+          </Link>
         </li>
       </ul>
     </nav>
