@@ -17,7 +17,19 @@ function CarritoCard({ producto, funcionCarrito }) {
         </p>
       }
       <img className="carrito-image" src={producto.image}></img>
-      <p style={{ color: "black" }}>{producto.price} $</p>
+      <p className="precio-carrito" style={{ color: "black" }}>
+        Cantidad: {producto.cantidad}
+      </p>
+      <div>
+        <p style={{ color: "black" }}>Precio unitario</p>
+        <p style={{ color: "black" }}>{producto.price} $</p>
+      </div>
+      <div>
+        <p style={{ color: "black" }}>Precio Total</p>
+        <p style={{ color: "black" }}>
+          Total: {producto.price * producto.cantidad} $
+        </p>
+      </div>
       <button
         className="boton-carrito"
         onClick={agregarAlCarrito}
