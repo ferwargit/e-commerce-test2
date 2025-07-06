@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import CarritoCard from "./CarritoCard";
 import "../styles/Carrito.css";
 
