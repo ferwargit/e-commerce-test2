@@ -8,7 +8,8 @@ function ProductosContainer({ productos }) {
   const [productosCarrito, setProductosCarito] = useState([]);
 
   useEffect(() => {
-    fetch("https://680f75cd67c5abddd195693e.mockapi.io/products")
+    // fetch("https://680f75cd67c5abddd195693e.mockapi.io/products")
+    fetch("https://6869ee8c2af1d945cea2cfff.mockapi.io/productos")
       .then((respuesta) => respuesta.json())
       .then((datos) => {
         console.log("Datos obtenidos:", datos);

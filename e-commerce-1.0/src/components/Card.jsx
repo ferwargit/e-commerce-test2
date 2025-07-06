@@ -9,7 +9,7 @@ function Card({ producto, funcionCarrito }) {
   // }
 
   return (
-    <div className="producto-card">
+    <div key={producto.id} className="producto-card">
       <h3 style={{ color: "black" }}>{producto.nombre}</h3>
       <p style={{ color: "black" }}>{producto.descripcion}</p>
       <img
