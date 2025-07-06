@@ -1,12 +1,12 @@
 import "../styles/Productos.css";
 
 function Card({ producto, funcionCarrito }) {
-  function agregarAlCarrito() {
-    console.log(
-      `Paso 1 - Llama a la función agregar al carrito: ${producto.nombre}`
-    );
-    funcionCarrito(producto);
-  }
+  // function agregarAlCarrito() {
+  //   console.log(
+  //     `Paso 1 - Llama a la función agregar al carrito: ${producto.nombre}`
+  //   );
+  //   funcionCarrito(producto);
+  // }
 
   return (
     <div className="producto-card">
@@ -19,7 +19,7 @@ function Card({ producto, funcionCarrito }) {
       />
       <p style={{ color: "black" }}>Precio: ${producto.precio}</p>
       <button
-        onClick={agregarAlCarrito}
+        onClick={() => funcionCarrito(producto)}
         style={{ color: "black" }}
         className="producto-button"
       >
