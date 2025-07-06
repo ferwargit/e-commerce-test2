@@ -1,0 +1,23 @@
+.carrito-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.carrito-card {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 8px;
+  width: 200px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.carrito-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
