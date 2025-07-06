@@ -3,6 +3,8 @@ import Header from "../components/Header";
 import Main from "../components/Main";
 import Nav from "../components/Nav";
 import ProductosContainer from "../components/ProductosContainer";
+import imagen from "../assets/imagen.jpg";
+import imagen2 from "../../public/imagenes/imagen2.jpg";
 
 function Home() {
   const productos = [
@@ -37,6 +39,20 @@ function Home() {
       precio: 400,
       imagen:
         "https://cdn.pixabay.com/photo/2017/07/01/20/51/mug-2462665_1280.png",
+    },
+    {
+      id: 5,
+      nombre: "Producto 5",
+      descripcion: "Descripción del Producto 5",
+      precio: 500,
+      imagen: imagen,
+    },
+    {
+      id: 6,
+      nombre: "Producto 6",
+      descripcion: "Descripción del Producto 6",
+      precio: 600,
+      imagen: imagen2,
     },
   ];
   return (
