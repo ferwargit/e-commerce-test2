@@ -7,7 +7,7 @@ export default function Carrito({ productosCarrito }) {
     <div>
       <h2 style={{ color: "white" }}>Carrito de Compras</h2>
       <div className="carrito-container">
-        {console.log(productosCarrito.length)}
+        {/* {console.log(productosCarrito.length)} */}
         {productosCarrito.length > 0 ? (
           productosCarrito.map((producto) => (
             <CarritoCard key={producto.id} producto={producto} />
