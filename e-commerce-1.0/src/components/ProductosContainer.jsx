@@ -69,9 +69,9 @@ function ProductosContainer() {
           ))}
         </div>
         {
-          <div>
-            <Carrito productosCarrito={productosCarrito} />
-          </div>
+          // <div>
+          //   <Carrito productosCarrito={productosCarrito} />
+          // </div>
         }
       </div>
     );
