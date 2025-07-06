@@ -50,6 +50,7 @@ function Home() {
       <div>
         <Nav />
         <ProductosContainer productos={productos} />
+        <Footer />
       </div>
     </div>
   );
