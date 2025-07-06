@@ -9,7 +9,6 @@ function ProductosContainer() {
   const [productosCarrito, setProductosCarito] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-  const [total, setTotal] = useState(0);
 
   {
     useEffect(() => {
@@ -51,11 +50,6 @@ function ProductosContainer() {
       const nuevoCarrito = [...productosCarrito, producto];
       setProductosCarito(nuevoCarrito);
     }
-    setTotal(0);
-    // Calcular el total del carrito
-    productosCarrito.map((p) => {
-      setTotal(total + p.price * p.cantidad);
-    });
   }
 
   if (cargando) {
@@ -76,7 +70,7 @@ function ProductosContainer() {
         </div>
         {
           <div>
-            <Carrito productosCarrito={productosCarrito} total={total} />
+            <Carrito productosCarrito={productosCarrito} />
           </div>
         }
       </div>
