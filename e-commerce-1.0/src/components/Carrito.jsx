@@ -1,7 +1,8 @@
 import CarritoCard from "./CarritoCard";
 import "../styles/Carrito.css";
+import { Navigate } from "react-router-dom";
 
-export default function Carrito({ productosCarrito, funcionBorrar }) {
+export default function Carrito({ productosCarrito, funcionBorrar, usuarioLogeado }) {
   console.log("Carrito renderizado con productos:", productosCarrito);
 
   const total = productosCarrito.reduce((subTotal, producto) => {
@@ -14,6 +15,13 @@ export default function Carrito({ productosCarrito, funcionBorrar }) {
   }
 
   console.log("Total del carrito:", total);
+
+  if (!usuarioLogeado) {
+    return (
+      <Navigate to="/login" replace />
+    );
+  }
+
   return (
     <div>
       <h2 style={{ color: "white" }}>Carrito de Compras</h2>

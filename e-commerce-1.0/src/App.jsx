@@ -82,6 +82,7 @@ function App() {
               <Carrito
                 productosCarrito={productosCarrito}
                 funcionBorrar={borrarProductoCarrito}
+                usuarioLogeado={usuarioLogeado}
               />
             }
           />
