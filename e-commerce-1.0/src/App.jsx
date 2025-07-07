@@ -1,10 +1,12 @@
 import { useState } from "react";
-import "./App.css";
-import Nav from "./components/Nav";
-import Home from "./layouts/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductosContainer from "./components/ProductosContainer";
+import Home from "./layouts/Home";
+import Nav from "./components/Nav";
 import Carrito from "./components/Carrito";
+import About from "./components/About";
+import Contacto from "./components/Contacto";
+import "./App.css";
 
 function App() {
   const [productosCarrito, setProductosCarrito] = useState([]);
@@ -41,7 +43,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        <Nav productosCarrito={productosCarrito} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -57,6 +59,8 @@ function App() {
               />
             }
           />
+          <Route path="/nosotros" element={<About />} />
+          <Route path="/contacto" element={<Contacto />} />
         </Routes>
       </div>
     </Router>
