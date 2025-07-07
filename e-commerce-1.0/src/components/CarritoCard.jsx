@@ -22,13 +22,11 @@ function CarritoCard({ producto, funcionDisparadora }) {
       </p>
       <div>
         <p style={{ color: "black" }}>Precio unitario</p>
-        <p style={{ color: "black" }}>{producto.price} $</p>
+        <p style={{ color: "black" }}>$ {producto.price}</p>
       </div>
       <div>
         <p style={{ color: "black" }}>Precio Total</p>
-        <p style={{ color: "black" }}>
-          Total: {producto.price * producto.cantidad} $
-        </p>
+        <p style={{ color: "black" }}>$ {producto.price * producto.cantidad}</p>
       </div>
       <button
         className="boton-carrito"

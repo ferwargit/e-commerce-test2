@@ -12,6 +12,14 @@
   justify-content: space-between;
 }
 
+.carrito-titulo-producto {
+  width: 20%;
+}
+
+.carrito-titulo-descripcion {
+  width: 30%;
+}
+
 .carrito-card {
   display: flex;
   flex-direction: row;
@@ -28,6 +36,19 @@
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
+}
+
+.carrito-producto {
+  width: 20%;
+}
+
+.descripcion-carrito {
+  width: 30%;
+}
+
+.boton-carrito {
+  width: 3%;
+  height: 30%;
 }
 
 .carrito-image {

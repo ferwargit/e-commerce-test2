@@ -6,6 +6,7 @@ import Nav from "./components/Nav";
 import Carrito from "./components/Carrito";
 import About from "./components/About";
 import Contacto from "./components/Contacto";
+import ProductoDetalle from "./components/ProductoDetalle";
 import "./App.css";
 
 function App() {
@@ -46,10 +47,7 @@ function App() {
         <Nav productosCarrito={productosCarrito} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/productos"
-            element={<ProductosContainer functionCarrito={funcionCarrito} />}
-          />
+          <Route path="/productos" element={<ProductosContainer />} />
           <Route
             path="/carrito"
             element={
@@ -61,6 +59,10 @@ function App() {
           />
           <Route path="/nosotros" element={<About />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route
+            path="/productos/:id"
+            element={<ProductoDetalle funcionCarrito={funcionCarrito} />}
+          />
         </Routes>
       </div>
     </Router>

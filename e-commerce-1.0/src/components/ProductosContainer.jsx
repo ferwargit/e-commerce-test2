@@ -3,7 +3,7 @@ import Card from "./Card";
 import "../styles/Productos.css";
 import "../styles/Carrito.css";
 
-function ProductosContainer({ functionCarrito }) {
+function ProductosContainer() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -27,10 +27,6 @@ function ProductosContainer({ functionCarrito }) {
     }, []);
   }
 
-  function functionEnProductos(producto) {
-    functionCarrito(producto);
-  }
-
   if (cargando) {
     return <p>Cargando productos...</p>;
   } else if (error) {
@@ -39,11 +35,7 @@ function ProductosContainer({ functionCarrito }) {
     return (
       <div className="productos-container">
         {productos.map((producto) => (
-          <Card
-            key={producto.id}
-            producto={producto}
-            funcionCarrito={functionEnProductos}
-          />
+          <Card key={producto.id} producto={producto} />
         ))}
       </div>
     );
