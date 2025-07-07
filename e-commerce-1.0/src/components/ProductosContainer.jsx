@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import Card from "./Card";
 import "../styles/Productos.css";
 import "../styles/Carrito.css";
-import Carrito from "./Carrito";
 
-function ProductosContainer() {
+function ProductosContainer({ functionCarrito }) {
   const [productos, setProductos] = useState([]);
-  const [productosCarrito, setProductosCarito] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,27 +27,8 @@ function ProductosContainer() {
     }, []);
   }
 
-  // Función para agregar un producto al carrito
-  function funcionCarrito(producto) {
-    const existe = productosCarrito.find((p) => p.id === producto.id);
-    console.log(existe);
-    if (existe) {
-      const carritoActualizado = productosCarrito.map((p) => {
-        if (p.id === producto.id) {
-          const productoActualizado = {
-            ...p,
-            cantidad: p.cantidad + producto.cantidad,
-          };
-          return productoActualizado;
-        } else {
-          return p;
-        }
-      });
-      setProductosCarito(carritoActualizado);
-    } else {
-      const nuevoCarrito = [...productosCarrito, producto];
-      setProductosCarito(nuevoCarrito);
-    }
+  function functionEnProductos(producto) {
+    functionCarrito(producto);
   }
 
   if (cargando) {
@@ -58,21 +37,14 @@ function ProductosContainer() {
     return <p>Error: {error}</p>;
   } else {
     return (
-      <div>
-        <div className="productos-container">
-          {productos.map((producto) => (
-            <Card
-              key={producto.id}
-              producto={producto}
-              funcionCarrito={funcionCarrito}
-            />
-          ))}
-        </div>
-        {
-          // <div>
-          //   <Carrito productosCarrito={productosCarrito} />
-          // </div>
-        }
+      <div className="productos-container">
+        {productos.map((producto) => (
+          <Card
+            key={producto.id}
+            producto={producto}
+            funcionCarrito={functionEnProductos}
+          />
+        ))}
       </div>
     );
   }
