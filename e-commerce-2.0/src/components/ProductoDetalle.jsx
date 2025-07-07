@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/ProductoDetalle.css";
 import { dispararSweetBasico } from "../assets/SweetAlert";
+import { CarritoContext } from "../context/CarritoContext";
 
-function ProductoDetalle({ funcionCarrito }) {
+function ProductoDetalle() {
+  const { agregarAlCarrito } = useContext(CarritoContext);
+
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
@@ -29,7 +32,7 @@ function ProductoDetalle({ funcionCarrito }) {
       });
   }, [id]);
 
-  function agregarAlCarrito() {
+  function funcionCarrito() {
     if (cantidad < 1) return;
     dispararSweetBasico(
       "Producto agregado",
@@ -37,7 +40,7 @@ function ProductoDetalle({ funcionCarrito }) {
       "success",
       "Cerrar"
     );
-    funcionCarrito({ ...producto, cantidad });
+    agregarAlCarrito({ ...producto, cantidad });
   }
 
   function sumarContador() {
@@ -66,7 +69,7 @@ function ProductoDetalle({ funcionCarrito }) {
           <span>{cantidad}</span>
           <button onClick={sumarContador}>+</button>
         </div>
-        <button onClick={agregarAlCarrito}>Agregar al carrito</button>
+        <button onClick={funcionCarrito}>Agregar al carrito</button>
       </div>
     </div>
   );

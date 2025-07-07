@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
 
-function Nav({ productosCarrito }) {
+function Nav() {
+  const productosCarrito = useContext(CarritoContext);
+
   return (
     <nav style={{ backgroundColor: "#333", color: "white", padding: "10px" }}>
       <ul
