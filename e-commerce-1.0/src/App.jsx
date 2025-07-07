@@ -9,7 +9,6 @@ import Carrito from "./components/Carrito";
 function App() {
   const [productosCarrito, setProductosCarrito] = useState([]);
 
-  // Función para agregar un producto al carrito
   function funcionCarrito(producto) {
     const existe = productosCarrito.find((p) => p.id === producto.id);
     console.log(existe);
@@ -32,6 +31,13 @@ function App() {
     }
   }
 
+  function borrarProductoCarrito(id) {
+    console.log("Borrando producto con id:", id);
+    const nuevoCarrito = productosCarrito.filter((p) => p.id !== id);
+    setProductosCarrito(nuevoCarrito);
+    console.log("Carrito actualizado:", nuevoCarrito);
+  }
+
   return (
     <Router>
       <div>
@@ -44,7 +50,12 @@ function App() {
           />
           <Route
             path="/carrito"
-            element={<Carrito productosCarrito={productosCarrito} />}
+            element={
+              <Carrito
+                productosCarrito={productosCarrito}
+                funcionBorrar={borrarProductoCarrito}
+              />
+            }
           />
         </Routes>
       </div>

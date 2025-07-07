@@ -1,9 +1,9 @@
 import "../styles/Carrito.css";
 
-function CarritoCard({ producto, funcionCarrito }) {
-  function agregarAlCarrito() {
+function CarritoCard({ producto, funcionDisparadora }) {
+  function borrarDelCarrito() {
     console.log("Paso 1");
-    funcionCarrito(producto.id);
+    funcionDisparadora(producto.id);
   }
 
   return (
@@ -32,7 +32,7 @@ function CarritoCard({ producto, funcionCarrito }) {
       </div>
       <button
         className="boton-carrito"
-        onClick={agregarAlCarrito}
+        onClick={borrarDelCarrito}
         style={{ backgroundColor: "red", color: "black" }}
       >
         X
