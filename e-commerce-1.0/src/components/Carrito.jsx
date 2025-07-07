@@ -30,7 +30,7 @@ export default function Carrito({ productosCarrito, funcionBorrar }) {
         ) : (
           <p style={{ color: "white" }}>Carrito vacio</p>
         )}
-        {total > 0 ? <span>Total: {total} $</span> : <></>}
+        {total > 0 ? <span>Total a pagar: {total.toFixed(2)} $</span> : <></>}
       </div>
     </div>
   );
