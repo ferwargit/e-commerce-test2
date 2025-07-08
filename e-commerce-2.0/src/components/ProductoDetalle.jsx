@@ -38,7 +38,7 @@ function ProductoDetalle() {
       "Producto agregado",
       "El producto se ha agregado al carrito con exito",
       "success",
-      "Cerrar"
+      "Aceptar"
     );
     agregarAlCarrito({ ...producto, cantidad });
   }

@@ -1,23 +1,25 @@
 .productos-container {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 400px;
+  width: 100%;
 }
 
 .producto-card {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: bisque;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  width: 200px;
+  width: 30%;
+  height: 100%;
   text-align: center;
-  box-sizing: border-box;
+  margin-top: 5px;
 }
 
 .producto-image {
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
 }

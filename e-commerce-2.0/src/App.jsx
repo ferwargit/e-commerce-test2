@@ -1,10 +1,4 @@
-import { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductosContainer from "./components/ProductosContainer";
 import Home from "./layouts/Home";
 import Nav from "./components/Nav";
@@ -13,28 +7,18 @@ import About from "./components/About";
 import Contacto from "./components/Contacto";
 import ProductoDetalle from "./components/ProductoDetalle";
 import Login from "./components/Login";
+import Login2 from "./components/Login2";
 import Admin from "./components/Admin";
 import "./App.css";
 
 function App() {
-  const [usuarioLogeado, setUsuarioLogeado] = useState(false);
-  const [adminLogeado, setAdminLogeado] = useState(false);
-
-  function manejarAdmin() {
-    setAdminLogeado(!adminLogeado);
-  }
-
-  function manejarUser() {
-    setUsuarioLogeado(!usuarioLogeado);
-  }
-
   return (
     <Router>
       <div>
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
+          {/* <Route
             path="/login"
             element={
               <Login
@@ -44,21 +28,14 @@ function App() {
                 setLogeadoUser={manejarUser}
               />
             }
-          />
+          /> */}
+          <Route path="/login" element={<Login2 />} />
           <Route path="/productos" element={<ProductosContainer />} />
-          <Route
-            path="/carrito"
-            element={<Carrito usuarioLogeado={usuarioLogeado} />}
-          />
+          <Route path="/carrito" element={<Carrito />} />
           <Route path="/nosotros" element={<About />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/productos/:id" element={<ProductoDetalle />} />
-          <Route
-            path="/admin"
-            element={
-              adminLogeado ? <Admin /> : <Navigate to={"/login"} replace />
-            }
-          />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </Router>

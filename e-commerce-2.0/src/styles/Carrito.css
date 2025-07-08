@@ -3,13 +3,17 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
+  height: 200px;
+  margin-top: 10px;
 }
 
-.carrito-titulo {
+.carrito-titulos {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  height: 30%;
+  width: 100%;
 }
 
 .carrito-titulo-producto {
@@ -21,21 +25,18 @@
 }
 
 .carrito-card {
+  border: solid;
+  border-color: black;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  height: 150px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-color: black;
+  background-color: bisque;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  box-sizing: border-box;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  width: 100%;
+  text-align: center;
+  height: 150px;
 }
 
 .carrito-producto {
