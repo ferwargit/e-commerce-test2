@@ -1,19 +1,15 @@
 import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../context/AuthContext.jsx";
 
-function Admin() {
-  const { user } = useAuthContext();
+export default function Admin() {
+  const { admin } = useAuthContext();
 
-  if (!user) {
+  if (!admin) {
     return <Navigate to="/login" replace />;
   }
-
   return (
     <div>
-      <h1>Panel de administración</h1>
-      <p>Administra tus productos, pedidos y usuarios aquí</p>
+      <p>Componente Admin</p>
     </div>
   );
 }
-
-export default Admin;
