@@ -58,3 +58,54 @@ export function loginEmailPass(email, password) {
       });
   });
 }
+
+/////////////////////////////////////////////////////////////////
+///////////////////// BASE DE DATOS FIRESTORE  //////////////////
+/////////////////////////////////////////////////////////////////
+
+import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+
+const db = getFirestore(app);
+
+export function crearProducto(name, image, price, description) {
+  return new Promise(async (res, rej) => {
+    try {
+      const docRef = await addDoc(collection(db, "productos"), {
+        name: name,
+        imagen: image,
+        price: price,
+        description: description,
+      });
+
+      console.log("Document written with ID: ", docRef.id);
+      res(docRef);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      rej(e);
+    }
+  });
+}
+
+export function obtenerProductos() {
+  return new Promise(async (res, rej) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "users"));
+
+      const resultados = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name,
+          image: data.image,
+          price: data.price,
+          description: data.description,
+        };
+      });
+
+      res(resultados);
+    } catch (error) {
+      console.error("Error al obtener los usuarios:", error);
+      rej(error);
+    }
+  });
+}

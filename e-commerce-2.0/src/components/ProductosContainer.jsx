@@ -1,27 +1,21 @@
-import { useState, useEffect } from "react";
-import Card from "./Card";
+import { useEffect, useState } from "react";
 import "../styles/Productos.css";
-import "../styles/Carrito.css";
+import Card from "./Card";
+import { useProductosContext } from "../context/ProductosContext";
 
 function ProductosContainer() {
-  const [productos, setProductos] = useState([]);
+  const { productos, obtenerProductos } = useProductosContext();
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
   {
     useEffect(() => {
-      fetch("https://6869ee8c2af1d945cea2cfff.mockapi.io/productos")
-        .then((respuesta) => {
-          return respuesta.json();
-        })
-        .then((datos) => {
-          console.log("Datos obtenidos:", datos);
-          setProductos(datos);
+      obtenerProductos()
+        .then((productos) => {
           setCargando(false);
         })
         .catch((error) => {
-          console.error("Error al obtener los datos:", error);
-          setError("Hubo un problema al cargar los productos");
+          setError("Hubo un problema al cargar los productos.");
           setCargando(false);
         });
     }, []);
@@ -30,7 +24,7 @@ function ProductosContainer() {
   if (cargando) {
     return <p>Cargando productos...</p>;
   } else if (error) {
-    return <p>Error: {error}</p>;
+    return <p>{error}</p>;
   } else {
     return (
       <div className="productos-container">

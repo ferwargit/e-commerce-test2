@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { dispararSweetBasico } from "../assets/SweetAlert";
+import { agregarProducto } from "../assets/requests";
 import { useAuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import { useProductosContext } from "../context/ProductosContext";
 
-function FormularioProducto() {
-  const { agregarProducto } = useProductosContext();
+function FormularioProductoFirebase() {
   const { admin } = useAuthContext();
 
   const [producto, setProducto] = useState({
@@ -116,4 +115,4 @@ function FormularioProducto() {
   );
 }
 
-export default FormularioProducto;
+export default FormularioProductoFirebase;
