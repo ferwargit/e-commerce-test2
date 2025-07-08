@@ -30,8 +30,19 @@ export function AuthProvider({ children }) {
     setAdmin(false);
   };
 
+  function verificacionLog() {
+    const userToken = localStorage.getItem("authToken");
+    if (userToken && userToken == "fake-token-admin") {
+      setAdmin(true);
+      return;
+    }
+    if (userToken) {
+      setUser(userToken);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, admin }}>
+    <AuthContext.Provider value={{ user, login, logout, admin, verificacionLog }}>
       {children}
     </AuthContext.Provider>
   );

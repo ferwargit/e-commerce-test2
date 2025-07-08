@@ -9,7 +9,7 @@ function Login2() {
   const [password, setPassword] = useState("");
   const [modo, setModo] = useState("firebase"); // 'firebase' | 'registro' | 'manual'
 
-  const { login, user, logout } = useAuthContext();
+  const { login, user, logout, admin } = useAuthContext();
   const navigate = useNavigate();
 
   const handleSubmitManual = (e) => {
@@ -79,7 +79,7 @@ function Login2() {
     setPassword("");
   };
 
-  if (user) {
+  if (user || admin ) {
     return (
       <form onSubmit={cerrarSesion}>
         <button type="submit">Cerrar sesión</button>

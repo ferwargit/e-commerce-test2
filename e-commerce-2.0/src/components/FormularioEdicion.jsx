@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProductosContext } from "../context/ProductosContext";
+import { dispararSweetBasico } from "../assets/sweetAlert";
 
 function FormularioEdicion() {
-  const { obtenerProducto, productoEncontrado } = useProductosContext();
+  const { obtenerProducto, productoEncontrado, editarProducto } =
+    useProductosContext();
   const { id } = useParams();
   const [producto, setProducto] = useState(productoEncontrado);
   const [cargando, setCargando] = useState(true);
@@ -30,30 +32,46 @@ function FormularioEdicion() {
     const { name, value } = e.target;
     setProducto({ ...producto, [name]: value });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const respuesta = await fetch(
-        `https://6869ee8c2af1d945cea2cfff.mockapi.io/productos/${producto.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(producto),
-        }
-      );
-      if (!respuesta.ok) {
-        throw new Error("Error al actualizar el producto.");
-      }
-      const data = await respuesta.json();
-      onActualizar(data);
-      alert("Producto actualizado correctamente.");
-    } catch (error) {
-      console.error(error.message);
-      alert("Hubo un problema al actualizar el producto.");
+
+  const validarFormulario = () => {
+    if (!producto.name.trim()) {
+      return "El nombre es obligatorio.";
+    }
+    if (!producto.price || producto.price <= 0) {
+      return "El precio debe ser mayor a 0.";
+    }
+    console.log(producto.description.trim());
+    if (!producto.description.trim() || producto.description.length < 10) {
+      return "La descripción debe tener al menos 10 caracteres.";
+    }
+    if (!producto.image.trim()) {
+      return "La url de la imgaen no debe estar vacía";
+    } else {
+      return true;
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validarForm = validarFormulario();
+    if (validarForm == true) {
+      editarProducto(producto)
+        .then((prod) => {
+          alert("Producto actualizado correctamente.");
+        })
+        .catch((error) => {
+          alert("Hubo un problema al actualizar el producto. " + error.message);
+        });
+    } else {
+      dispararSweetBasico(
+        "Error en la carga de producto",
+        validarForm,
+        "error",
+        "Cerrar"
+      );
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <h2>Editar Producto</h2>

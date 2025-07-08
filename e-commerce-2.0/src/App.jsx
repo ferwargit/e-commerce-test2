@@ -11,8 +11,19 @@ import Admin from "./components/Admin";
 import Login2 from "./components/Login2";
 import FormularioProducto from "./components/FormularioProducto";
 import FormularioEdicion from "./components/FormularioEdicion";
+import { useEffect } from "react";
+import { useAuthContext } from "./context/AuthContext";
 
 function App() {
+
+  const { verificacionLog } = useAuthContext();
+
+  useEffect(() => {
+    // Verifica el estado de autenticación del usuario al cargar la aplicación
+    verificacionLog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Router>
       <div>

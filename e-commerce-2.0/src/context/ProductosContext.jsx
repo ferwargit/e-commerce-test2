@@ -75,6 +75,54 @@ export function ProductosProvider({ children }) {
     });
   }
 
+  function editarProducto(producto) {
+    return new Promise(async (res, rej) => {
+      try {
+        const respuesta = await fetch(
+          `https://6869ee8c2af1d945cea2cfff.mockapi.io/productos/${producto.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(producto),
+          }
+        );
+        if (!respuesta.ok) {
+          throw new Error("Error al actualizar el producto.");
+        }
+        const data = await respuesta.json();
+        res(data);
+      } catch (error) {
+        console.error(error.message);
+        rej(error);
+      }
+    });
+  }
+
+  const eliminarProducto = (id) => {
+    const confirmar = window.confirm("¿Estás seguro de eliminar?");
+    if (confirmar) {
+      return new Promise(async (res, rej) => {
+        try {
+          const respuesta = await fetch(
+            `https://6869ee8c2af1d945cea2cfff.mockapi.io/productos/${id}`,
+            {
+              method: "DELETE",
+            }
+          );
+          if (!respuesta.ok) throw new Error("Error al eliminar");
+          alert("Producto eliminado correctamente.");
+          res();
+        } catch (error) {
+          console.error(error.message);
+          alert("Hubo un problema al eliminar el producto.");
+          rej(error);
+        }
+      });
+    }
+  };
+
   return (
     <ProductosContext.Provider
       value={{
@@ -83,6 +131,8 @@ export function ProductosProvider({ children }) {
         agregarProducto,
         obtenerProducto,
         productoEncontrado,
+        editarProducto,
+        eliminarProducto,
       }}
     >
       {children}
