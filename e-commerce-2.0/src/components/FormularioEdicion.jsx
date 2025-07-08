@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProductosContext } from "../context/ProductosContext";
-import { dispararSweetBasico } from "../assets/sweetAlert";
+import { dispararSweetBasico } from "../assets/SweetAlert";
 
 function FormularioEdicion() {
   const { obtenerProducto, productoEncontrado, editarProducto } =
