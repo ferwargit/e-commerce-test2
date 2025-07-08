@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 function Login2() {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuthContext();
+  const { login, user, logout } = useAuthContext();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -18,6 +18,18 @@ function Login2() {
       alert("Credenciales incorrectas");
     }
   };
+
+  const handleSubmit2 = () => {
+    logout();
+  };
+
+  if (user == "admin") {
+    return (
+      <form onSubmit={handleSubmit2}>
+        <button type="submit">Cerrar sesión</button>
+      </form>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>
