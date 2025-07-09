@@ -8,7 +8,8 @@ import About from "./components/About";
 import Contacto from "./components/Contacto";
 import ProductoDetalle from "./components/ProductoDetalle";
 import Admin from "./components/Admin";
-import Login2 from "./components/Login2";
+// import Login2 from "./components/Login2";
+import LoginBoost from "./components/LoginBoost";
 import FormularioProducto from "./components/FormularioProducto";
 import FormularioEdicion from "./components/FormularioEdicion";
 import { useEffect } from "react";
@@ -30,7 +31,8 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login2 />} />
+          {/* <Route path="/login" element={<Login2 />} /> */}
+          <Route path="/login" element={<LoginBoost />} />
           <Route path="/productos" element={<ProductosContainer />} />
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/nosotros" element={<About />} />

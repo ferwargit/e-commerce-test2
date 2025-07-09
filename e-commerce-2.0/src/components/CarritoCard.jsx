@@ -1,40 +1,57 @@
-import "../styles/Carrito.css";
+// src/components/CarritoCard.jsx
+import React from "react";
+import { StyledButton } from "./Button";
 
 function CarritoCard({ producto, funcionDisparadora }) {
-  function borrarDelCarrito() {
-    console.log("Paso 1");
-    funcionDisparadora(producto.id);
-  }
+  // Formateador de moneda para un look profesional
+  const formatPrice = (value) =>
+    new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+    }).format(value);
 
   return (
-    <div className="carrito-card">
-      <h3 className="carrito-titulo" style={{ color: "black" }}>
-        {producto.name}
-      </h3>
-      {
-        <p className="descripcion-carrito" style={{ color: "black" }}>
-          {producto.description}
-        </p>
-      }
-      <img className="carrito-image" src={producto.image}></img>
-      <p className="precio-carrito" style={{ color: "black" }}>
-        Cantidad: {producto.cantidad}
-      </p>
-      <div>
-        <p style={{ color: "black" }}>Precio unitario</p>
-        <p style={{ color: "black" }}>$ {producto.price}</p>
+    <div className="card shadow-sm mb-3">
+      <div className="row g-0">
+        <div className="col-md-2 d-flex justify-content-center align-items-center p-2">
+          <img
+            src={producto.image}
+            alt={producto.name}
+            className="img-fluid rounded"
+            style={{
+              maxHeight: "100px",
+              maxWidth: "100px",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+        <div className="col-md-10">
+          <div className="card-body">
+            <div className="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 className="card-title mb-1">{producto.name}</h5>
+                <p className="card-text text-muted small">
+                  {formatPrice(producto.price)} c/u
+                </p>
+              </div>
+              <StyledButton
+                onClick={() => funcionDisparadora(producto.id)}
+                $variant="danger"
+                style={{ padding: "5px 10px", fontSize: "14px" }}
+              >
+                × {/* Símbolo de 'X' más elegante */}
+              </StyledButton>
+            </div>
+            <hr className="my-2" />
+            <div className="d-flex justify-content-between align-items-center">
+              <span>Cantidad: {producto.cantidad}</span>
+              <span className="fw-bold fs-5">
+                {formatPrice(producto.price * producto.cantidad)}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <p style={{ color: "black" }}>Precio Total</p>
-        <p style={{ color: "black" }}>$ {producto.price * producto.cantidad}</p>
-      </div>
-      <button
-        className="boton-carrito"
-        onClick={borrarDelCarrito}
-        style={{ backgroundColor: "red", color: "black" }}
-      >
-        X
-      </button>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { CarritoContext, CarritoProvider } from "../context/CarritoContext";
+import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
+import { FaShoppingCart } from "react-icons/fa";
 
 function Nav() {
   const { productosCarrito } = useContext(CarritoContext);
@@ -57,7 +58,7 @@ function Nav() {
             to="/carrito"
             style={{ color: "white", textDecoration: "none" }}
           >
-            Carrito{" "}
+            <FaShoppingCart /> {" "}
             <span>
               {productosCarrito.length > 0 ? productosCarrito.length : ""}
             </span>

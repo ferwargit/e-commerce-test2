@@ -1,32 +1,35 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useProductosContext } from "../context/ProductosContext";
-import { dispararSweetBasico } from "../assets/SweetAlert";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Asegúrate de importar los estilos de Toastify
+import { StyledButton, StyledLinkButton } from "./Button";
 
 function FormularioEdicion() {
-  const { obtenerProducto, productoEncontrado, editarProducto } =
-    useProductosContext();
+  const { obtenerProducto, editarProducto } = useProductosContext();
   const { id } = useParams();
-  const [producto, setProducto] = useState(productoEncontrado);
+  const navigate = useNavigate();
+
+  // 'producto' es el estado del formulario, inicializado como null
+  const [producto, setProducto] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
+  // 1. useEffect mejorado para cargar los datos del producto
   useEffect(() => {
     obtenerProducto(id)
-      .then(() => {
-        //setProducto(productoEncontrado)
-        setCargando(false);
+      .then((productoCargado) => {
+        setProducto(productoCargado); // Poblamos el estado del formulario con los datos recibidos
       })
-      .catch((error) => {
-        if (error == "Producto no encontrado") {
-          setError("Producto no encontrado");
-        }
-        if (error == "Hubo un error al obtener el producto.") {
-          setError("Hubo un error al obtener el producto.");
-        }
+      .catch((err) => {
+        setError(
+          err.message || "Hubo un error al cargar los datos del producto."
+        );
+      })
+      .finally(() => {
         setCargando(false);
       });
-  }, [id]);
+  }, [id, obtenerProducto]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,89 +37,147 @@ function FormularioEdicion() {
   };
 
   const validarFormulario = () => {
-    if (!producto.name.trim()) {
-      return "El nombre es obligatorio.";
-    }
-    if (!producto.price || producto.price <= 0) {
-      return "El precio debe ser mayor a 0.";
-    }
-    console.log(producto.description.trim());
-    if (!producto.description.trim() || producto.description.length < 10) {
+    if (!producto.name.trim()) return "El nombre es obligatorio.";
+    if (!producto.price || producto.price <= 0)
+      return "El precio debe ser un número positivo.";
+    if (!producto.description.trim() || producto.description.length < 10)
       return "La descripción debe tener al menos 10 caracteres.";
-    }
-    if (!producto.image.trim()) {
-      return "La url de la imgaen no debe estar vacía";
-    } else {
-      return true;
-    }
+    if (!producto.image.trim())
+      return "La URL de la imagen no debe estar vacía.";
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validarForm = validarFormulario();
-    if (validarForm == true) {
-      editarProducto(producto)
-        .then((prod) => {
-          alert("Producto actualizado correctamente.");
+    const esValido = validarFormulario();
+    if (esValido === true) {
+      toast
+        .promise(editarProducto(producto), {
+          pending: "Actualizando producto...",
+          success: "¡Producto actualizado con éxito!",
+          error: "Hubo un problema al actualizar el producto.",
         })
-        .catch((error) => {
-          alert("Hubo un problema al actualizar el producto. " + error.message);
+        .then(() => {
+          setTimeout(() => navigate(`/productos/${id}`), 2000); // Redirige al detalle después de 2s
         });
     } else {
-      dispararSweetBasico(
-        "Error en la carga de producto",
-        validarForm,
-        "error",
-        "Cerrar"
-      );
+      toast.error(esValido);
     }
   };
 
+  // 2. Estados de carga y error profesionales
+  if (cargando) {
+    return (
+      <div className="container text-center my-5">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">
+            Cargando datos del producto...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container my-5">
+        <div className="alert alert-danger text-center">
+          <h2>Error</h2>
+          <p>{error}</p>
+          <StyledLinkButton to="/productos" $variant="primary">
+            Volver a Productos
+          </StyledLinkButton>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. JSX del formulario modernizado
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Editar Producto</h2>
-      <div>
-        <label>Nombre:</label>
-        <input
-          type="text"
-          name="name"
-          value={producto.name || ""}
-          onChange={handleChange}
-          required
-        />
+    <div className="container mt-5">
+      <ToastContainer position="top-center" autoClose={2000} />
+      <div className="row justify-content-center">
+        <div className="col-lg-8 col-md-10">
+          <div className="card shadow-lg border-0">
+            <div className="card-body p-4">
+              <h2 className="card-title text-center mb-4">Editar Producto</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label">
+                    Nombre del Producto
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={producto.name || ""}
+                    onChange={handleChange}
+                    className="form-control"
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="image" className="form-label">
+                    URL de la Imagen
+                  </label>
+                  <input
+                    id="image"
+                    type="url"
+                    name="image"
+                    value={producto.image || ""}
+                    onChange={handleChange}
+                    className="form-control"
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="price" className="form-label">
+                    Precio
+                  </label>
+                  <div className="input-group">
+                    <span className="input-group-text">$</span>
+                    <input
+                      id="price"
+                      type="number"
+                      name="price"
+                      value={producto.price || ""}
+                      onChange={handleChange}
+                      className="form-control"
+                      required
+                      min="0.01"
+                      step="0.01"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="description" className="form-label">
+                    Descripción
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={producto.description || ""}
+                    onChange={handleChange}
+                    className="form-control"
+                    rows="4"
+                    required
+                  />
+                </div>
+
+                <div className="d-grid">
+                  <StyledButton type="submit" $variant="primary">
+                    Actualizar Producto
+                  </StyledButton>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <label>URL de la Imagen</label>
-        <input
-          type="text"
-          name="image"
-          value={producto.image}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Precio:</label>
-        <input
-          type="number"
-          name="price"
-          value={producto.price || ""}
-          onChange={handleChange}
-          required
-          min="0"
-        />
-      </div>
-      <div>
-        <label>Descripción:</label>
-        <textarea
-          name="description"
-          value={producto.description || ""}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <button type="submit">Actualizar Producto</button>
-    </form>
+    </div>
   );
 }
 
