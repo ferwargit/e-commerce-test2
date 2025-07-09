@@ -27,10 +27,12 @@ function CarritoCard({ producto, funcionDisparadora }) {
         </div>
         <div className="col-md-10">
           <div className="card-body">
-            <div className="d-flex justify-content-between align-items-start">
-              <div>
-                <h5 className="card-title mb-1">{producto.name}</h5>
-                <p className="card-text text-muted small">
+            <div className="d-flex justify-content-between align-items-start gap-3">
+              <div className="flex-grow-1 d-flex flex-column">
+                <h5 className="card-title mb-1 align-self-center">
+                  {producto.name}
+                </h5>
+                <p className="card-text text-muted small mb-0 align-self-start">
                   {formatPrice(producto.price)} c/u
                 </p>
               </div>
@@ -39,7 +41,7 @@ function CarritoCard({ producto, funcionDisparadora }) {
                 $variant="danger"
                 style={{ padding: "5px 10px", fontSize: "14px" }}
               >
-                × {/* Símbolo de 'X' más elegante */}
+                ×
               </StyledButton>
             </div>
             <hr className="my-2" />

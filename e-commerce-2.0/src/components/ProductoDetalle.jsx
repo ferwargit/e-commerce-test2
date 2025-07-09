@@ -1,7 +1,7 @@
+import SEO from "./SEO";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import "../styles/ProductoDetalle.css"; // Ya no necesitaremos este archivo
-import { dispararSweetBasico } from "../assets/SweetAlert";
+import Swal from "sweetalert2";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
@@ -27,17 +27,28 @@ function ProductoDetalle() {
       });
   }, [id, obtenerProducto]);
 
-  // Las funciones de lógica no cambian
-  const funcionCarrito = () => {
+  function funcionCarrito() {
     if (cantidad < 1) return;
-    dispararSweetBasico(
-      "Producto agregado",
-      "El producto se ha agregado al carrito con éxito",
-      "success",
-      "Aceptar"
-    );
+
     agregarAlCarrito({ ...productoEncontrado, cantidad });
-  };
+
+    Swal.fire({
+      title: "¡Producto Agregado!",
+      text: `Se ha añadido "${productoEncontrado.name}" a tu carrito.`,
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745", // Verde (éxito)
+      cancelButtonColor: "#6c757d", // Gris (secundario)
+      confirmButtonText: "Ir al Carrito",
+      cancelButtonText: "Seguir Comprando",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navegar("/carrito");
+      } else if (result.isDismissed) {
+        navegar("/productos");
+      }
+    });
+  }
 
   const dispararEliminar = () => {
     eliminarProducto(id)
@@ -55,7 +66,6 @@ function ProductoDetalle() {
   const sumarContador = () => setCantidad((c) => c + 1);
   const restarContador = () => setCantidad((c) => (c > 1 ? c - 1 : 1));
 
-  // 1. Estados de carga y error mejorados
   if (cargando) {
     return (
       <div className="container text-center my-5">
@@ -88,75 +98,78 @@ function ProductoDetalle() {
 
   // 2. Nuevo layout con Bootstrap
   return (
-    <div className="container my-5">
-      <div className="row g-5 align-items-center">
-        {/* Columna de la Imagen */}
-        <div className="col-lg-6">
-          <img
-            src={productoEncontrado.image}
-            alt={productoEncontrado.name}
-            className="img-fluid rounded shadow-lg"
-          />
-        </div>
+    <>
+      <SEO
+        title={productoEncontrado.name}
+        description={productoEncontrado.description}
+      />
+      <div className="container my-5">
+        <div className="row g-5 align-items-center">
+          <div className="col-lg-6">
+            <img
+              src={productoEncontrado.image}
+              alt={productoEncontrado.name}
+              className="img-fluid rounded shadow-lg"
+            />
+          </div>
 
-        {/* Columna de la Información */}
-        <div className="col-lg-6">
-          <h1 className="display-5 fw-bold">{productoEncontrado.name}</h1>
-          <p className="fs-3 my-3 text-primary">{formattedPrice}</p>
-          <p className="lead text-muted mb-4">
-            {productoEncontrado.description}
-          </p>
+          <div className="col-lg-6">
+            <h1 className="display-5 fw-bold">{productoEncontrado.name}</h1>
+            <p className="fs-3 my-3 text-primary">{formattedPrice}</p>
+            <p className="lead text-muted mb-4">
+              {productoEncontrado.description}
+            </p>
 
-          <hr className="my-4" />
+            <hr className="my-4" />
 
-          {/* Selector de cantidad y botones de acción */}
-          {!admin ? (
-            // Vista para el cliente
-            <div className="d-flex align-items-center gap-3">
-              <div className="input-group" style={{ maxWidth: "150px" }}>
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={restarContador}
+            {!admin ? (
+              // Vista para el cliente
+              <div className="d-flex align-items-center gap-3">
+                <div className="input-group" style={{ maxWidth: "150px" }}>
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={restarContador}
+                  >
+                    -
+                  </button>
+                  <span className="form-control text-center fs-5">
+                    {cantidad}
+                  </span>
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={sumarContador}
+                  >
+                    +
+                  </button>
+                </div>
+                <StyledButton
+                  onClick={funcionCarrito}
+                  $variant="success"
+                  className="flex-grow-1"
                 >
-                  -
-                </button>
-                <span className="form-control text-center fs-5">
-                  {cantidad}
-                </span>
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
-                  onClick={sumarContador}
-                >
-                  +
-                </button>
+                  Agregar al Carrito
+                </StyledButton>
               </div>
-              <StyledButton
-                onClick={funcionCarrito}
-                $variant="success"
-                className="flex-grow-1"
-              >
-                Agregar al Carrito
-              </StyledButton>
-            </div>
-          ) : (
-            // Vista para el administrador
-            <div className="d-grid gap-2 d-md-flex">
-              <StyledLinkButton
-                to={`/admin/editarProducto/${id}`}
-                $variant="primary"
-              >
-                Editar Producto
-              </StyledLinkButton>
-              <StyledButton onClick={dispararEliminar} $variant="danger">
-                Eliminar Producto
-              </StyledButton>
-            </div>
-          )}
+            ) : (
+              // Vista para el administrador
+              <div className="d-grid gap-2 d-md-flex">
+                <StyledLinkButton
+                  to={`/admin/editarProducto/${id}`}
+                  $variant="primary"
+                >
+                  Editar Producto
+                </StyledLinkButton>
+                <StyledButton onClick={dispararEliminar} $variant="danger">
+                  Eliminar Producto
+                </StyledButton>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

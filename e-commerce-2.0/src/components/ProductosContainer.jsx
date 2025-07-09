@@ -1,3 +1,4 @@
+import SEO from "./SEO";
 import { useEffect, useState, useCallback } from "react";
 import Card from "./Card";
 import { useProductosContext } from "../context/ProductosContext";
@@ -38,23 +39,23 @@ function ProductosContainer() {
     return <p className="container text-center mt-5 text-danger">{error}</p>;
   }
 
-  // Nuevo layout con Bootstrap Grid
   return (
-    <div className="container mt-4">
-      <div className="row g-4">
-        {" "}
-        {/* g-4 añade espaciado (gutter) entre columnas */}
-        {productos.map((producto) => (
-          // Definimos las columnas para diferentes tamaños de pantalla
-          <div
-            key={producto.id}
-            className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch"
-          >
-            <Card producto={producto} />
-          </div>
-        ))}
+    <>
+      <SEO title="Nuestros Productos" />
+      <div className="container mt-4">
+        <div className="row g-4">
+          {/* {" "} */}
+          {productos.map((producto) => (
+            <div
+              key={producto.id}
+              className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch"
+            >
+              <Card producto={producto} />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
