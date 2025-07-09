@@ -1,18 +1,19 @@
-import { useEffect, useState, useContext, use } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "../styles/ProductoDetalle.css";
 import { dispararSweetBasico } from "../assets/SweetAlert";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
+import { StyledButton, StyledLinkButton } from "./Button";
 
 function ProductoDetalle() {
-
   const navegar = useNavigate();
 
   const { admin } = useAuthContext();
   const { agregarAlCarrito } = useContext(CarritoContext);
-  const { productoEncontrado, obtenerProducto, eliminarProducto } = useProductosContext();
+  const { productoEncontrado, obtenerProducto, eliminarProducto } =
+    useProductosContext();
 
   const { id } = useParams();
   const [cantidad, setCantidad] = useState(1);
@@ -22,20 +23,16 @@ function ProductoDetalle() {
   console.log(id);
 
   useEffect(() => {
+    // Pequeña optimización: no es necesario repetir el 'setError'
     obtenerProducto(id)
       .then(() => {
         setCargando(false);
       })
       .catch((error) => {
-        if (error == "Producto no encontrado") {
-          setError("Producto no encontrado");
-        }
-        if (error == "Hubo un error al obtener el producto.") {
-          setError("Hubo un error al obtener el producto.");
-        }
+        setError("Hubo un error al obtener el producto.");
         setCargando(false);
       });
-  }, [id]);
+  }, [id, obtenerProducto]); // Añadido obtenerProducto a las dependencias
 
   function funcionCarrito() {
     if (cantidad < 1) return;
@@ -48,21 +45,28 @@ function ProductoDetalle() {
     agregarAlCarrito({ ...productoEncontrado, cantidad });
   }
 
-  function dispararEliminar(){
-    eliminarProducto(id).then(() => {
-      navegar("/productos")
-    }).catch((error) => {
-      dispararSweetBasico("Hubo un problema al agregar el producto", error, "error", "Cerrar")
-    })
+  function dispararEliminar() {
+    eliminarProducto(id)
+      .then(() => {
+        navegar("/productos");
+      })
+      .catch((error) => {
+        dispararSweetBasico(
+          "Hubo un problema al agregar el producto",
+          error,
+          "error",
+          "Cerrar"
+        );
+      });
   }
 
   function sumarContador() {
-    setCantidad(cantidad + 1);
+    setCantidad((c) => c + 1);
   }
 
   function restarContador() {
     if (cantidad > 1) {
-      setCantidad(cantidad - 1);
+      setCantidad((c) => c - 1);
     }
   }
 
@@ -81,24 +85,33 @@ function ProductoDetalle() {
         <h2>{productoEncontrado.name}</h2>
         <p>{productoEncontrado.description}</p>
         <p>Precio: ${productoEncontrado.price}</p>
-        <div className="detalle-contador">
-          <button onClick={restarContador}>-</button>
-          <span>{cantidad}</span>
-          <button onClick={sumarContador}>+</button>
-        </div>
+
+        {!admin ? (
+          <div className="detalle-contador">
+            <button onClick={restarContador}>-</button>
+            <span>{cantidad}</span>
+            <button onClick={sumarContador}>+</button>
+          </div>
+        ) : null}
+
         {admin ? (
-          <Link to={"/admin/editarProducto/" + id}>
-            {" "}
-            <button>Editar producto</button>
-          </Link>
+          <StyledLinkButton
+            to={"/admin/editarProducto/" + id}
+            $variant="primary"
+          >
+            Editar Producto
+          </StyledLinkButton>
         ) : (
-          <button onClick={funcionCarrito}>Agregar al carrito</button>
+          <StyledButton onClick={funcionCarrito} $variant="success">
+            Agregar al Carrito
+          </StyledButton>
         )}
+
         {admin ? (
-          <button onClick={dispararEliminar}>Eliminar Producto</button>
-        ) : (
-          <></>
-        )}
+          <StyledButton onClick={dispararEliminar} $variant="danger">
+            Eliminar Producto
+          </StyledButton>
+        ) : null}
       </div>
     </div>
   );

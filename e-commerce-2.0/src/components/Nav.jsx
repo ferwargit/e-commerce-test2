@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { CarritoContext, CarritoProvider } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 
-function Nav({}) {
+function Nav() {
   const { productosCarrito } = useContext(CarritoContext);
-  const { user, admin } = useAuthContext();
+  const { admin } = useAuthContext();
   return (
     <nav
       style={{
@@ -86,7 +86,7 @@ function Nav({}) {
               to="/admin/agregarProductos"
               style={{ color: "white", textDecoration: "none" }}
             >
-              Agregar productos
+              Agregar Productos
             </Link>
           </li>
         ) : (
