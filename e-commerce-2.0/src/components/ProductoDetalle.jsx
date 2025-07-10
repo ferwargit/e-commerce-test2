@@ -114,30 +114,51 @@ function ProductoDetalle() {
           </div>
 
           <div className="col-lg-6">
-            <h1 className="display-5 fw-bold">{productoEncontrado.name}</h1>
-            <p className="fs-3 my-3 text-primary">{formattedPrice}</p>
-            <p className="lead text-muted mb-4">
+            <h1
+              className="display-5 fw-bold"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              {productoEncontrado.name}
+            </h1>
+            <p className="fs-3 my-3" style={{ color: "var(--color-primary)" }}>
+              {formattedPrice}
+            </p>
+            <p
+              className="lead mb-4"
+              style={{ color: "var(--color-text-muted)" }}
+            >
               {productoEncontrado.description}
             </p>
 
-            <hr className="my-4" />
+            <hr
+              className="my-4"
+              style={{ borderColor: "var(--color-border)" }}
+            />
 
             {!admin ? (
               // Vista para el cliente
               <div className="d-flex align-items-center gap-3">
                 <div className="input-group" style={{ maxWidth: "150px" }}>
+                  {/* Usamos btn-outline-light para el tema oscuro */}
                   <button
-                    className="btn btn-outline-secondary"
+                    className="btn btn-outline-light"
                     type="button"
                     onClick={restarContador}
                   >
                     -
                   </button>
-                  <span className="form-control text-center fs-5">
+                  <span
+                    className="form-control text-center fs-5"
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
+                  >
                     {cantidad}
                   </span>
                   <button
-                    className="btn btn-outline-secondary"
+                    className="btn btn-outline-light"
                     type="button"
                     onClick={sumarContador}
                   >

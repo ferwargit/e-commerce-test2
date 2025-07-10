@@ -14,6 +14,7 @@ import FormularioEdicion from "./components/FormularioEdicion";
 import { useEffect } from "react";
 import { useAuthContext } from "./context/AuthContext";
 import AdminProductos from "./components/AdminProductos"; // Importa el nuevo componente
+import Footer from "./components/Footer"; // Suponiendo que tienes o quieres un footer
 
 function App() {
   const { verificacionLog } = useAuthContext();
@@ -26,27 +27,30 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div className="app-container">
         <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginBoost />} />
-          <Route path="/admin/login" element={<LoginAdmin />} />
-          <Route path="/productos" element={<ProductosContainer />} />
-          <Route path="/carrito" element={<Carrito />} />
-          <Route path="/nosotros" element={<About />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/productos/:id" element={<ProductoDetalle />} />
-          <Route path="/admin" element={<AdminProductos />} />
-          <Route
-            path="/admin/agregarProductos"
-            element={<FormularioProducto />}
-          />
-          <Route
-            path="/admin/editarProducto/:id"
-            element={<FormularioEdicion />}
-          />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginBoost />} />
+            <Route path="/admin/login" element={<LoginAdmin />} />
+            <Route path="/productos" element={<ProductosContainer />} />
+            <Route path="/carrito" element={<Carrito />} />
+            <Route path="/nosotros" element={<About />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/productos/:id" element={<ProductoDetalle />} />
+            <Route path="/admin" element={<AdminProductos />} />
+            <Route
+              path="/admin/agregarProductos"
+              element={<FormularioProducto />}
+            />
+            <Route
+              path="/admin/editarProducto/:id"
+              element={<FormularioEdicion />}
+            />
+          </Routes>
+        </main>
+        <Footer />
       </div>
     </Router>
   );

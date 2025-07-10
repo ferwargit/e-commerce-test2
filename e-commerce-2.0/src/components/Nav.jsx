@@ -6,8 +6,7 @@ import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
 
-// Importa los iconos
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 import { RiAdminFill, RiLoginBoxLine, RiAddBoxFill } from "react-icons/ri";
 import {
   BsBoxSeamFill,
@@ -19,7 +18,7 @@ import {
 function Nav() {
   const { productosCarrito } = useContext(CarritoContext);
   const { user, admin, logout } = useAuthContext();
-  const { setTerminoBusqueda, terminoBusqueda } = useProductosContext();
+  const { setTerminoBusqueda } = useProductosContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -29,7 +28,7 @@ function Nav() {
   );
 
   const activeLinkStyle = {
-    color: "#0d6efd",
+    color: "var(--color-primary)",
     textDecoration: "underline",
   };
 
@@ -41,14 +40,12 @@ function Nav() {
     }
   };
 
-  // --- Lógica de Renderizado Principal ---
   const renderNavContent = () => {
-    // CASO 1: Admin está logueado
     if (admin) {
+      // --- NAVEGACIÓN DE ADMINISTRADOR (SIN CAMBIOS) ---
       return (
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            {/* Enlaces comunes del sitio */}
             <li className="nav-item">
               <NavLink
                 className="nav-link"
@@ -57,7 +54,8 @@ function Nav() {
                 }
                 to="/"
               >
-                <BsFillHouseDoorFill /> Inicio
+                {" "}
+                <BsFillHouseDoorFill /> Inicio{" "}
               </NavLink>
             </li>
             <li className="nav-item">
@@ -68,58 +66,59 @@ function Nav() {
                 }
                 to="/productos"
               >
-                <BsBoxSeamFill /> Productos
+                {" "}
+                <BsBoxSeamFill /> Productos{" "}
               </NavLink>
             </li>
           </ul>
-
-          {/* --- INICIO DEL CAMBIO --- */}
-          {/* Agrupamos la búsqueda y las acciones del admin */}
           <div className="d-flex align-items-center">
-            {/* Formulario de Búsqueda para Admin */}
             <form
               className="d-flex"
               role="search"
               onSubmit={(e) => e.preventDefault()}
             >
               <input
-                className="form-control me-2"
+                className="form-control form-control-dark me-2"
                 type="search"
-                placeholder="Buscar en admin..."
+                placeholder="Buscar productos..."
                 aria-label="Buscar"
-                value={terminoBusqueda}
-                onChange={(e) => setTerminoBusqueda(e.target.value)} // Búsqueda simple, sin redirigir
+                onChange={(e) => setTerminoBusqueda(e.target.value)}
               />
             </form>
-
-            <ul className="navbar-nav ms-auto">
-              {/* Enlaces de herramientas de Admin */}
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  style={({ isActive }) =>
-                    isActive ? activeLinkStyle : undefined
-                  }
-                  to="/admin"
+            <ul className="navbar-nav d-flex flex-row gap-2 align-items-center">
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  <RiAdminFill /> Panel
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  style={({ isActive }) =>
-                    isActive ? activeLinkStyle : undefined
-                  }
-                  to="/admin/agregarProductos"
-                >
-                  <RiAddBoxFill /> Agregar
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/" onClick={logout}>
-                  <RiLoginBoxLine /> Logout
-                </NavLink>
+                  <FaUserCircle className="me-1" /> Administrador
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                  <li>
+                    <NavLink className="dropdown-item" to="/admin">
+                      <RiAdminFill /> Panel
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className="dropdown-item"
+                      to="/admin/agregarProductos"
+                    >
+                      <RiAddBoxFill /> Agregar Producto
+                    </NavLink>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/" onClick={logout}>
+                      <RiLoginBoxLine /> Cerrar Sesión
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
@@ -127,15 +126,15 @@ function Nav() {
       );
     }
 
-    // CASO 2: Usuario está en la página de login de admin (pero no logueado)
     if (location.pathname.startsWith("/admin")) {
-      return null; // No muestra nada más que el logo
+      return null;
     }
 
-    // CASO 3: Navegación normal del cliente
+    // --- NAVEGACIÓN DE CLIENTE ---
     return (
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          {/* ... Enlaces de cliente sin cambios ... */}
           <li className="nav-item">
             <NavLink
               className="nav-link"
@@ -180,15 +179,14 @@ function Nav() {
             onSubmit={(e) => e.preventDefault()}
           >
             <input
-              className="form-control me-2"
+              className="form-control form-control-dark me-2"
               type="search"
               placeholder="Buscar productos..."
               aria-label="Buscar"
-              value={terminoBusqueda}
               onChange={handleBusquedaChange}
             />
           </form>
-          <ul className="navbar-nav d-flex flex-row gap-2">
+          <ul className="navbar-nav d-flex flex-row gap-2 align-items-center">
             <li className="nav-item">
               <NavLink
                 className="nav-link"
@@ -204,15 +202,39 @@ function Nav() {
               </NavLink>
             </li>
             {user ? (
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/" onClick={logout}>
-                  <RiLoginBoxLine /> Logout
-                </NavLink>
+              // --- INICIO DE LA CORRECCIÓN ---
+              // Restauramos el código del dropdown del cliente
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <FaUserCircle className="me-1" /> {user.split("@")[0]}
+                </a>
+                <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Mi Perfil
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/" onClick={logout}>
+                      <RiLoginBoxLine /> Cerrar Sesión
+                    </Link>
+                  </li>
+                </ul>
               </li>
             ) : (
+              // --- FIN DE LA CORRECCIÓN ---
               <li className="nav-item">
                 <NavLink
-                  className="nav-link"
+                  className="nav-link text-white"
                   style={({ isActive }) =>
                     isActive ? activeLinkStyle : undefined
                   }
@@ -234,7 +256,6 @@ function Nav() {
         <Link className="navbar-brand" to="/">
           Mi Tienda
         </Link>
-        {/* El botón hamburguesa necesita estar fuera de la lógica condicional para que funcione en admin logueado */}
         <button
           className="navbar-toggler"
           type="button"

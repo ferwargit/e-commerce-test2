@@ -3,14 +3,17 @@ import React from "react";
 import { StyledLinkButton } from "./Button";
 import styled from 'styled-components';
 
-// Componente estilizado para la tarjeta (sin cambios)
+// Usamos los nuevos colores de fondo y borde
 const StyledCard = styled.div`
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
   width: 100%;
+  border-radius: 12px; // Bordes más redondeados y modernos
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border-color: var(--color-primary);
   }
 `;
 
@@ -19,13 +22,15 @@ const StyledCard = styled.div`
 // 1. Creamos un contenedor para la imagen
 const ImageContainer = styled.div`
   width: 100%;
-  height: 220px; /* Podemos darle un poco más de altura */
-  display: flex; /* Para centrar la imagen dentro */
+  height: 220px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8f9fa; /* Un fondo gris muy sutil */
-  overflow: hidden; /* Asegura que nada se salga */
-  padding: 1rem; /* Añade un espacio de aire alrededor de la imagen */
+  background-color: white; // Un fondo blanco para que resalten los productos
+  overflow: hidden;
+  padding: 1rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 `;
 
 // 2. Modificamos el componente de la imagen
@@ -44,15 +49,15 @@ function Card({ producto }) {
   }).format(producto.price);
 
   return (
-    <StyledCard className="card h-100 border-0 shadow-sm">
+    <StyledCard className="h-100 border-0 shadow-sm">
       {/* 3. Usamos la nueva estructura de imagen */}
       <ImageContainer>
         <CardImage src={producto.image} alt={producto.name} />
       </ImageContainer>
-      <div className="card-body d-flex flex-column p-3">
+      <div className="card-body d-flex flex-column p-4">
         {/* Usamos text-truncate para cortar títulos muy largos con '...' */}
-        <h5 className="card-title text-truncate">{producto.name}</h5>
-        <p className="card-text text-muted mb-3">{formattedPrice}</p>
+        <h5 className="card-title text-truncate" style={{ color: 'var(--color-text-primary)' }}>{producto.name}</h5>
+        <p className="card-text mb-3" style={{ color: 'var(--color-text-muted)' }}>{formattedPrice}</p>
         
         <div className="mt-auto text-center">
             <StyledLinkButton to={"/productos/" + producto.id} $variant="primary">

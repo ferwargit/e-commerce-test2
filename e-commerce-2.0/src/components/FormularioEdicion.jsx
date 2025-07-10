@@ -114,6 +114,11 @@ function FormularioEdicion() {
                     onChange={handleChange}
                     className="form-control"
                     required
+                    style={{ 
+                        backgroundColor: 'var(--color-background-dark)', 
+                        color: 'var(--color-text-primary)', 
+                        borderColor: 'var(--color-border)' 
+                    }}
                   />
                 </div>
 
@@ -129,6 +134,11 @@ function FormularioEdicion() {
                     onChange={handleChange}
                     className="form-control"
                     required
+                    style={{ 
+                        backgroundColor: 'var(--color-background-dark)', 
+                        color: 'var(--color-text-primary)', 
+                        borderColor: 'var(--color-border)' 
+                    }}
                   />
                 </div>
 
@@ -148,6 +158,11 @@ function FormularioEdicion() {
                       required
                       min="0.01"
                       step="0.01"
+                      style={{ 
+                        backgroundColor: 'var(--color-background-dark)', 
+                        color: 'var(--color-text-primary)', 
+                        borderColor: 'var(--color-border)' 
+                    }}
                     />
                   </div>
                 </div>
