@@ -98,12 +98,12 @@ function FormularioEdicion() {
       <ToastContainer position="top-center" autoClose={2000} />
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-10">
-          <div className="card shadow-lg border-0">
+          <div className="card shadow-lg border-0" style={{ backgroundColor: 'var(--color-background-light)', borderColor: 'var(--color-border)' }}>
             <div className="card-body p-4">
-              <h2 className="card-title text-center mb-4">Editar Producto</h2>
+              <h2 className="card-title text-center mb-4" style={{ color: 'var(--color-text-primary)' }}>Editar Producto</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
+                  <label htmlFor="name" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
                     Nombre del Producto
                   </label>
                   <input
@@ -123,7 +123,7 @@ function FormularioEdicion() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="image" className="form-label">
+                  <label htmlFor="image" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
                     URL de la Imagen
                   </label>
                   <input
@@ -143,7 +143,7 @@ function FormularioEdicion() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="price" className="form-label">
+                  <label htmlFor="price" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
                     Precio
                   </label>
                   <div className="input-group">
@@ -168,7 +168,7 @@ function FormularioEdicion() {
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="description" className="form-label">
+                  <label htmlFor="description" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
                     Descripción
                   </label>
                   <textarea
@@ -179,6 +179,11 @@ function FormularioEdicion() {
                     className="form-control"
                     rows="4"
                     required
+                    style={{ 
+                        backgroundColor: 'var(--color-background-dark)', 
+                        color: 'var(--color-text-primary)', 
+                        borderColor: 'var(--color-border)' 
+                    }}
                   />
                 </div>
 

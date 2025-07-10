@@ -37,9 +37,9 @@ export default function Carrito() {
   if (productosCarrito.length === 0) {
     return (
       <div className="container text-center my-5">
-        <div className="card p-5 shadow-sm">
-          <h1 className="card-title">Tu carrito está vacío</h1>
-          <p className="card-text text-muted">
+        <div className="card p-5 shadow-sm" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)'}}>
+          <h1 className="card-title" style={{ color: 'var(--color-text-primary)' }}>Tu carrito está vacío</h1>
+          <p className="card-text text-muted" >
             Parece que todavía no has agregado productos
           </p>
           <div className="mt-4">
@@ -59,7 +59,7 @@ export default function Carrito() {
 
       <div className="container my-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
-          <h1>Carrito de Compras</h1>
+          <h1 style={{ color: 'var(--color-text-primary)' }}>Carrito de Compras</h1>
           <StyledButton onClick={vaciarCarrito} $variant="danger">
             Vaciar Carrito
           </StyledButton>
@@ -79,19 +79,19 @@ export default function Carrito() {
 
           {/* Columna del Resumen del Pedido */}
           <div className="col-lg-4">
-            <div className="card shadow-sm">
+            <div className="card shadow-sm" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)'}}>
               <div className="card-body">
-                <h4 className="card-title mb-3">Resumen del Pedido</h4>
+                <h4 className="card-title mb-3" style={{ color: 'var(--color-text-primary)' }}>Resumen del Pedido</h4>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item d-flex justify-content-between">
+                  <li className="list-group-item d-flex justify-content-between" style={{ backgroundColor: 'transparent', color: 'var(--color-text-primary)', borderColor: 'var(--color-border)' }}>
                     <span>Subtotal</span>
                     <span>{formatPrice(total)}</span>
                   </li>
-                  <li className="list-group-item d-flex justify-content-between">
+                  <li className="list-group-item d-flex justify-content-between"style={{ backgroundColor: 'transparent', color: 'var(--color-text-primary)', borderColor: 'var(--color-border)' }}>
                     <span>Envío</span>
                     <span>A calcular</span>
                   </li>
-                  <li className="list-group-item d-flex justify-content-between fw-bold fs-5">
+                  <li className="list-group-item d-flex justify-content-between fw-bold fs-5" style={{ backgroundColor: 'transparent', color: 'var(--color-text-primary)', borderColor: 'var(--color-border)' }}>
                     <span>Total</span>
                     <span>{formatPrice(total)}</span>
                   </li>

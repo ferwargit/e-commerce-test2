@@ -11,7 +11,7 @@ function CarritoCard({ producto, funcionDisparadora }) {
     }).format(value);
 
   return (
-    <div className="card shadow-sm mb-3">
+    <div className="card shadow-sm mb-3" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)'}}>
       <div className="row g-0">
         <div className="col-md-2 d-flex justify-content-center align-items-center p-2">
           <img
@@ -29,7 +29,7 @@ function CarritoCard({ producto, funcionDisparadora }) {
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-start gap-3">
               <div className="flex-grow-1 d-flex flex-column">
-                <h5 className="card-title mb-1 align-self-center">
+                <h5 className="card-title mb-1 align-self-center" style={{ color: 'var(--color-text-primary)' }}>
                   {producto.name}
                 </h5>
                 <p className="card-text text-muted small mb-0 align-self-start">
@@ -46,7 +46,7 @@ function CarritoCard({ producto, funcionDisparadora }) {
             </div>
             <hr className="my-2" />
             <div className="d-flex justify-content-between align-items-center">
-              <span>Cantidad: {producto.cantidad}</span>
+              <span style={{ color: 'var(--color-text-primary)' }}>Cantidad: {producto.cantidad}</span>
               <span className="fw-bold fs-5">
                 {formatPrice(producto.price * producto.cantidad)}
               </span>

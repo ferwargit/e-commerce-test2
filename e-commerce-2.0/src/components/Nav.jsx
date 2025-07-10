@@ -254,7 +254,7 @@ function Nav() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Mi Tienda
+          TechStore
         </Link>
         <button
           className="navbar-toggler"

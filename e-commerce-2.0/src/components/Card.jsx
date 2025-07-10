@@ -1,7 +1,7 @@
 // src/components/Card.jsx
 import React from "react";
 import { StyledLinkButton } from "./Button";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // Usamos los nuevos colores de fondo y borde
 const StyledCard = styled.div`
@@ -41,11 +41,10 @@ const CardImage = styled.img`
 `;
 // --- FIN DE LA MEJORA ---
 
-
 function Card({ producto }) {
-  const formattedPrice = new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
+  const formattedPrice = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
   }).format(producto.price);
 
   return (
@@ -56,13 +55,23 @@ function Card({ producto }) {
       </ImageContainer>
       <div className="card-body d-flex flex-column p-4">
         {/* Usamos text-truncate para cortar títulos muy largos con '...' */}
-        <h5 className="card-title text-truncate" style={{ color: 'var(--color-text-primary)' }}>{producto.name}</h5>
-        <p className="card-text mb-3" style={{ color: 'var(--color-text-muted)' }}>{formattedPrice}</p>
-        
+        <h5
+          className="card-title text-truncate"
+          style={{ color: "var(--color-text-primary)" }}
+        >
+          {producto.name}
+        </h5>
+        <p
+          className="card-text mb-3"
+          style={{ color: "var(--color-text-muted)" }}
+        >
+          {formattedPrice}
+        </p>
+
         <div className="mt-auto text-center">
-            <StyledLinkButton to={"/productos/" + producto.id} $variant="primary">
-                Ver Detalle
-            </StyledLinkButton>
+          <StyledLinkButton to={"/productos/" + producto.id} $variant="primary">
+            Ver Detalle
+          </StyledLinkButton>
         </div>
       </div>
     </StyledCard>

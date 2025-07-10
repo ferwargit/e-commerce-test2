@@ -1,8 +1,8 @@
 function Main() {
   return (
-    <main style={{ padding: "20px" }}>
-      <h2>Contenido Principal</h2>
-      <p>Este es un ejemplo de contenido dentro del área principal.</p>
+    <main className="container my-5 text-center">
+      <h1 style={{ color: 'var(--color-text-primary)' }}>Contenido Principal</h1>
+      <p className="lead" style={{ color: 'var(--color-text-muted)' }}>Este es un ejemplo de contenido dentro del área principal</p>
     </main>
   );
 }

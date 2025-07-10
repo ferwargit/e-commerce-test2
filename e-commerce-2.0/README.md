@@ -1,11 +1,11 @@
 
 ---
 
-# Mi Tienda Online - E-commerce con React
+# TechStore - E-commerce con React
 
  <!-- Reemplaza esta URL con una captura de pantalla real de tu proyecto -->
 
-**Mi Tienda Online** es una aplicación de comercio electrónico moderna, responsiva y completamente funcional desarrollada con React. Este proyecto demuestra la implementación de un catálogo de productos, un carrito de compras persistente, autenticación de usuarios y un panel de administración para la gestión de productos.
+**TechStore** es una aplicación de comercio electrónico moderna, responsiva y completamente funcional desarrollada con React. Este proyecto demuestra la implementación de un catálogo de productos, un carrito de compras persistente, autenticación de usuarios y un panel de administración para la gestión de productos.
 
 El objetivo principal fue construir una aplicación robusta, escalable y con una excelente experiencia de usuario, aplicando las mejores prácticas de desarrollo en el ecosistema de React.
 

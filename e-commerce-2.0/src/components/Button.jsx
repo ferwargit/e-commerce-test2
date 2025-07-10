@@ -39,6 +39,7 @@ const buttonStyles = css`
 
   &:hover {
     background-color: ${(props) => variants[props.$variant || "primary"].hover};
+    color: white !important;
   }
 
   &:active {

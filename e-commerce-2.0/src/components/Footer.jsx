@@ -9,7 +9,7 @@ function Footer() {
         color: "#333",
       }}
     >
-      <p>&copy; 2025 - Mi Aplicación React</p>
+      <p>&copy; 2025 - TechStore</p>
     </footer>
   );
 }

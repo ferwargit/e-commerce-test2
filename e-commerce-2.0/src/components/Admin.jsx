@@ -8,8 +8,8 @@ export default function Admin() {
     return <Navigate to="/login" replace />;
   }
   return (
-    <div>
-      <p>Componente Admin</p>
+    <div className="container my-5 text-center">
+      <p className="lead" style={{ color: 'var(--color-text-muted)' }}>Componente Admin</p>
     </div>
   );
 }
