@@ -8,7 +8,7 @@ import CarritoCard from "./CarritoCard";
 import { StyledButton, StyledLinkButton } from "./Button";
 
 export default function Carrito() {
-  const { user } = useAuthContext();
+  const { user, admin } = useAuthContext();
   const { productosCarrito, vaciarCarrito, borrarProductoCarrito } =
     useContext(CarritoContext);
 
@@ -23,6 +23,11 @@ export default function Carrito() {
       style: "currency",
       currency: "ARS",
     }).format(value);
+
+  if (admin) {
+    // Si es admin, lo redirigimos a su panel
+    return <Navigate to="/admin" replace />;
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;

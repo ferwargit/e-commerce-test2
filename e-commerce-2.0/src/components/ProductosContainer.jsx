@@ -39,13 +39,24 @@ function ProductosContainer() {
     return <p className="container text-center mt-5 text-danger">{error}</p>;
   }
 
+  // --- INICIO DEL CAMBIO ---
+
+  // 1. Creamos una copia del array de productos para no mutar el estado original
+  const productosOrdenados = [...productos].sort((a, b) => {
+    // 2. Usamos localeCompare para un ordenamiento alfabético robusto
+    // que maneja bien acentos y caracteres especiales.
+    return a.name.localeCompare(b.name);
+  });
+
+  // --- FIN DEL CAMBIO ---
+
   return (
     <>
       <SEO title="Nuestros Productos" />
       <div className="container mt-4">
         <div className="row g-4">
-          {/* {" "} */}
-          {productos.map((producto) => (
+          {/* 3. Mapeamos sobre el nuevo array ordenado */}
+          {productosOrdenados.map((producto) => (
             <div
               key={producto.id}
               className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch"
