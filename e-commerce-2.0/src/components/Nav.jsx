@@ -78,11 +78,16 @@ function Nav() {
               onSubmit={(e) => e.preventDefault()}
             >
               <input
-                className="form-control form-control-dark me-2"
+                className="form-control me-2"
                 type="search"
                 placeholder="Buscar productos..."
                 aria-label="Buscar"
                 onChange={(e) => setTerminoBusqueda(e.target.value)}
+                style={{
+                  backgroundColor: "var(--color-background-light)",
+                  color: "var(--color-text-primary)",
+                  borderColor: "var(--color-border)",
+                }}
               />
             </form>
             <ul className="navbar-nav d-flex flex-row gap-2 align-items-center">
@@ -179,11 +184,16 @@ function Nav() {
             onSubmit={(e) => e.preventDefault()}
           >
             <input
-              className="form-control form-control-dark me-2"
+              className="form-control me-2"
               type="search"
               placeholder="Buscar productos..."
               aria-label="Buscar"
               onChange={handleBusquedaChange}
+              style={{
+                backgroundColor: "var(--color-background-light)",
+                color: "var(--color-text-primary)",
+                borderColor: "var(--color-border)",
+              }}
             />
           </form>
           <ul className="navbar-nav d-flex flex-row gap-2 align-items-center">

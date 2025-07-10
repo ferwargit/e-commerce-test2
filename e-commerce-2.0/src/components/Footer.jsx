@@ -1,15 +1,12 @@
+// src/components/Footer.jsx
+import "../styles/Footer.css"; // Importa el nuevo archivo CSS
+
 function Footer() {
+  const currentYear = new Date().getFullYear(); // Para que el año sea dinámico
+
   return (
-    <footer
-      style={{
-        backgroundColor: "#f1f1f1",
-        padding: "10px",
-        textAlign: "center",
-        marginTop: "20px",
-        color: "#333",
-      }}
-    >
-      <p>&copy; 2025 - TechStore</p>
+    <footer className="main-footer">
+      <p>© {currentYear} - TechStore</p> {/* Cambié el nombre para que coincida */}
     </footer>
   );
 }

@@ -11,7 +11,13 @@ function CarritoCard({ producto, funcionDisparadora }) {
     }).format(value);
 
   return (
-    <div className="card shadow-sm mb-3" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)'}}>
+    <div
+      className="card shadow-sm mb-3"
+      style={{
+        backgroundColor: "var(--color-background-light)",
+        border: "1px solid var(--color-border)",
+      }}
+    >
       <div className="row g-0">
         <div className="col-md-2 d-flex justify-content-center align-items-center p-2">
           <img
@@ -29,10 +35,16 @@ function CarritoCard({ producto, funcionDisparadora }) {
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-start gap-3">
               <div className="flex-grow-1 d-flex flex-column">
-                <h5 className="card-title mb-1 align-self-center" style={{ color: 'var(--color-text-primary)' }}>
+                <h5
+                  className="card-title mb-1 align-self-center"
+                  style={{ color: "var(--color-text-primary)" }}
+                >
                   {producto.name}
                 </h5>
-                <p className="card-text text-muted small mb-0 align-self-start">
+                <p
+                  className="small mb-0 align-self-start"
+                  style={{ color: "var(--color-text-muted)" }}
+                >
                   {formatPrice(producto.price)} c/u
                 </p>
               </div>
@@ -44,9 +56,20 @@ function CarritoCard({ producto, funcionDisparadora }) {
                 ×
               </StyledButton>
             </div>
-            <hr className="my-2" />
+            <hr
+              className="my-2"
+              style={{
+                margin: "0.5rem 0", // Ajustamos el margen vertical
+                color: "inherit", // Hereda el color del texto
+                border: 0, // Quitamos el borde por defecto
+                borderTop: "1px solid var(--color-border)", // Creamos nuestro propio borde superior
+                opacity: 0.75, // Lo hacemos un poco más sutil
+              }}
+            />
             <div className="d-flex justify-content-between align-items-center">
-              <span style={{ color: 'var(--color-text-primary)' }}>Cantidad: {producto.cantidad}</span>
+              <span style={{ color: "var(--color-text-primary)" }}>
+                Cantidad: {producto.cantidad}
+              </span>
               <span className="fw-bold fs-5">
                 {formatPrice(producto.price * producto.cantidad)}
               </span>
