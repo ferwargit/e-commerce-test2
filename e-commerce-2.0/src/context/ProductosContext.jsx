@@ -5,6 +5,7 @@ const ProductosContext = createContext();
 export function ProductosProvider({ children }) {
   const [productos, setProductos] = useState([]);
   const [productoEncontrado, setProductoEncontrado] = useState(null);
+  const [terminoBusqueda, setTerminoBusqueda] = useState("");
 
   const obtenerProductos = useCallback(() => {
     return new Promise((res, rej) => {
@@ -129,6 +130,8 @@ export function ProductosProvider({ children }) {
         productoEncontrado,
         editarProducto,
         eliminarProducto,
+        terminoBusqueda,
+        setTerminoBusqueda,
       }}
     >
       {children}

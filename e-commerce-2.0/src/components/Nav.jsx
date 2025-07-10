@@ -1,11 +1,12 @@
 // src/components/Nav.jsx
 
 import { useContext } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
+import { useProductosContext } from "../context/ProductosContext";
 
-// Importa todos los iconos que necesitarás
+// Importa los iconos
 import { FaShoppingCart } from "react-icons/fa";
 import { RiAdminFill, RiLoginBoxLine, RiAddBoxFill } from "react-icons/ri";
 import {
@@ -18,47 +19,36 @@ import {
 function Nav() {
   const { productosCarrito } = useContext(CarritoContext);
   const { user, admin, logout } = useAuthContext();
+  const { setTerminoBusqueda, terminoBusqueda } = useProductosContext();
+  const navigate = useNavigate();
   const location = useLocation();
 
-  // Variable para saber si estamos en una sección de admin (logueado o no)
-  const isCargandoPaginaAdmin = location.pathname.startsWith("/admin");
-
-  // Calcula el número total de ítems en el carrito (sumando cantidades)
   const totalItems = productosCarrito.reduce(
     (total, producto) => total + producto.cantidad,
     0
   );
 
-  // Estilo para el NavLink que está activo
   const activeLinkStyle = {
-    color: "#0d6efd", // Un color azul de Bootstrap para destacar
+    color: "#0d6efd",
     textDecoration: "underline",
   };
 
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          Mi Tienda
-        </Link>
+  const handleBusquedaChange = (e) => {
+    const nuevoTermino = e.target.value;
+    setTerminoBusqueda(nuevoTermino);
+    if (location.pathname !== "/productos" && nuevoTermino) {
+      navigate("/productos");
+    }
+  };
 
-        {/* Botón de hamburguesa para móviles */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        {/* Contenedor de los enlaces que se colapsará en móviles */}
+  // --- Lógica de Renderizado Principal ---
+  const renderNavContent = () => {
+    // CASO 1: Admin está logueado
+    if (admin) {
+      return (
         <div className="collapse navbar-collapse" id="navbarNav">
-          {/* Enlaces principales alineados a la izquierda */}
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {/* Enlaces comunes del sitio */}
             <li className="nav-item">
               <NavLink
                 className="nav-link"
@@ -81,82 +71,145 @@ function Nav() {
                 <BsBoxSeamFill /> Productos
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                style={({ isActive }) =>
-                  isActive ? activeLinkStyle : undefined
-                }
-                to="/nosotros"
-              >
-                <BsFillInfoCircleFill /> Nosotros
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                style={({ isActive }) =>
-                  isActive ? activeLinkStyle : undefined
-                }
-                to="/contacto"
-              >
-                <BsFillTelephoneFill /> Contacto
-              </NavLink>
-            </li>
           </ul>
 
-          {/* Enlaces de acción alineados a la derecha */}
-          <ul className="navbar-nav">
-            {/* 1. Muestra el Carrito solo si NO es admin Y NO estamos en una página de admin */}
-            {!admin && !isCargandoPaginaAdmin && (
+          {/* --- INICIO DEL CAMBIO --- */}
+          {/* Agrupamos la búsqueda y las acciones del admin */}
+          <div className="d-flex align-items-center">
+            {/* Formulario de Búsqueda para Admin */}
+            <form
+              className="d-flex"
+              role="search"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Buscar en admin..."
+                aria-label="Buscar"
+                value={terminoBusqueda}
+                onChange={(e) => setTerminoBusqueda(e.target.value)} // Búsqueda simple, sin redirigir
+              />
+            </form>
+
+            <ul className="navbar-nav ms-auto">
+              {/* Enlaces de herramientas de Admin */}
               <li className="nav-item">
                 <NavLink
                   className="nav-link"
                   style={({ isActive }) =>
                     isActive ? activeLinkStyle : undefined
                   }
-                  to="/carrito"
+                  to="/admin"
                 >
-                  <FaShoppingCart />
-                  {totalItems > 0 && (
-                    <span className="badge bg-primary ms-1">{totalItems}</span>
-                  )}
+                  <RiAdminFill /> Panel
                 </NavLink>
               </li>
-            )}
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  style={({ isActive }) =>
+                    isActive ? activeLinkStyle : undefined
+                  }
+                  to="/admin/agregarProductos"
+                >
+                  <RiAddBoxFill /> Agregar
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/" onClick={logout}>
+                  <RiLoginBoxLine /> Logout
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        </div>
+      );
+    }
 
-            {/* 2. Muestra los enlaces de Admin solo si el admin ESTÁ logueado */}
-            {admin && (
-              <>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    style={({ isActive }) =>
-                      isActive ? activeLinkStyle : undefined
-                    }
-                    to="/admin"
-                  >
-                    <RiAdminFill /> Admin Panel
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    style={({ isActive }) =>
-                      isActive ? activeLinkStyle : undefined
-                    }
-                    to="/admin/agregarProductos"
-                  >
-                    <RiAddBoxFill /> Agregar Productos
-                  </NavLink>
-                </li>
-              </>
-            )}
+    // CASO 2: Usuario está en la página de login de admin (pero no logueado)
+    if (location.pathname.startsWith("/admin")) {
+      return null; // No muestra nada más que el logo
+    }
 
-            {/* 3. Lógica para el botón de Login/Logout */}
-
-            {/* Muestra el botón de "Login" solo si NO estamos en una página de admin y NADIE está logueado */}
-            {!isCargandoPaginaAdmin && !user && !admin && (
+    // CASO 3: Navegación normal del cliente
+    return (
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+              to="/"
+            >
+              <BsFillHouseDoorFill /> Inicio
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+              to="/productos"
+            >
+              <BsBoxSeamFill /> Productos
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+              to="/nosotros"
+            >
+              <BsFillInfoCircleFill /> Nosotros
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
+              to="/contacto"
+            >
+              <BsFillTelephoneFill /> Contacto
+            </NavLink>
+          </li>
+        </ul>
+        <div className="d-flex align-items-center">
+          <form
+            className="d-flex"
+            role="search"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <input
+              className="form-control me-2"
+              type="search"
+              placeholder="Buscar productos..."
+              aria-label="Buscar"
+              value={terminoBusqueda}
+              onChange={handleBusquedaChange}
+            />
+          </form>
+          <ul className="navbar-nav d-flex flex-row gap-2">
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                style={({ isActive }) =>
+                  isActive ? activeLinkStyle : undefined
+                }
+                to="/carrito"
+              >
+                <FaShoppingCart />
+                {totalItems > 0 && (
+                  <span className="badge bg-primary ms-1">{totalItems}</span>
+                )}
+              </NavLink>
+            </li>
+            {user ? (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/" onClick={logout}>
+                  <RiLoginBoxLine /> Logout
+                </NavLink>
+              </li>
+            ) : (
               <li className="nav-item">
                 <NavLink
                   className="nav-link"
@@ -169,17 +222,31 @@ function Nav() {
                 </NavLink>
               </li>
             )}
-
-            {/* Muestra el botón de "Logout" si CUALQUIERA (user o admin) está logueado */}
-            {(user || admin) && (
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/" onClick={logout}>
-                  <RiLoginBoxLine /> Logout
-                </NavLink>
-              </li>
-            )}
           </ul>
         </div>
+      </div>
+    );
+  };
+
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div className="container-fluid">
+        <Link className="navbar-brand" to="/">
+          Mi Tienda
+        </Link>
+        {/* El botón hamburguesa necesita estar fuera de la lógica condicional para que funcione en admin logueado */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        {renderNavContent()}
       </div>
     </nav>
   );

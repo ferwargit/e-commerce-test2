@@ -4,7 +4,8 @@ import Card from "./Card";
 import { useProductosContext } from "../context/ProductosContext";
 
 function ProductosContainer() {
-  const { productos, obtenerProductos } = useProductosContext();
+  const { productos, obtenerProductos, terminoBusqueda } =
+    useProductosContext(); // 1. Obtén el término de búsqueda
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
@@ -40,14 +41,12 @@ function ProductosContainer() {
   }
 
   // --- INICIO DEL CAMBIO ---
-
-  // 1. Creamos una copia del array de productos para no mutar el estado original
-  const productosOrdenados = [...productos].sort((a, b) => {
-    // 2. Usamos localeCompare para un ordenamiento alfabético robusto
-    // que maneja bien acentos y caracteres especiales.
-    return a.name.localeCompare(b.name);
-  });
-
+  // Filtra y ordena los productos en un solo paso
+  const productosFiltradosYOrdenados = productos
+    .filter((producto) =>
+      producto.name.toLowerCase().includes(terminoBusqueda.toLowerCase())
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
   // --- FIN DEL CAMBIO ---
 
   return (
@@ -56,7 +55,7 @@ function ProductosContainer() {
       <div className="container mt-4">
         <div className="row g-4">
           {/* 3. Mapeamos sobre el nuevo array ordenado */}
-          {productosOrdenados.map((producto) => (
+          {productosFiltradosYOrdenados.map((producto) => (
             <div
               key={producto.id}
               className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch"
@@ -64,6 +63,16 @@ function ProductosContainer() {
               <Card producto={producto} />
             </div>
           ))}
+
+          {/* Opcional: Mostrar un mensaje si no hay resultados */}
+          {productosFiltradosYOrdenados.length === 0 && !cargando && (
+            <div className="col-12 text-center">
+              <h3>No se encontraron productos</h3>
+              <p className="text-muted">
+                Intenta con otro término de búsqueda.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
