@@ -108,12 +108,12 @@ function FormularioProducto() {
                   </label>
                   <input
                     id="image"
-                    type="url"
+                    type="text"
                     name="image"
                     value={producto.image}
                     onChange={handleChange}
                     className="form-control"
-                    placeholder="https://ejemplo.com/imagen.jpg"
+                    placeholder="/images/products/nombre-del-producto.jpg"
                     required
                   />
                 </div>

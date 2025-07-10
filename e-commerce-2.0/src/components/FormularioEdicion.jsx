@@ -123,7 +123,7 @@ function FormularioEdicion() {
                   </label>
                   <input
                     id="image"
-                    type="url"
+                    type="text"
                     name="image"
                     value={producto.image || ""}
                     onChange={handleChange}

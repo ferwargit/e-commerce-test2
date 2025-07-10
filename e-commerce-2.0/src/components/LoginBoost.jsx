@@ -17,15 +17,15 @@ function LoginBoost() {
   const navigate = useNavigate();
 
   // Las funciones de lógica no cambian
-  const handleSubmitManual = (e) => {
-    e.preventDefault();
-    if (usuario === "admin" && password === "1234") {
-      login("admin");
-      navigate("/");
-    } else {
-      dispararSweetBasico("Credenciales incorrectas", "", "error", "Cerrar");
-    }
-  };
+  // const handleSubmitManual = (e) => {
+  //   e.preventDefault();
+  //   if (usuario === "admin" && password === "1234") {
+  //     login("admin");
+  //     navigate("/");
+  //   } else {
+  //     dispararSweetBasico("Credenciales incorrectas", "", "error", "Cerrar");
+  //   }
+  // };
 
   const registrarUsuario = (e) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ function LoginBoost() {
                 }`}
                 onClick={() => handleModo("firebase")}
               >
-                Login con Email
+                Login
               </button>
               <button
                 type="button"
@@ -117,15 +117,15 @@ function LoginBoost() {
               >
                 Registrarse
               </button>
-              <button
+              {/* <button
                 type="button"
                 className={`btn ${
                   modo === "manual" ? "btn-primary" : "btn-outline-primary"
                 }`}
                 onClick={() => handleModo("manual")}
               >
-                Login Manual
-              </button>
+                Acceso Admin
+              </button> */}
             </div>
 
             {/* Renderizado condicional del formulario reutilizable */}
@@ -153,9 +153,9 @@ function LoginBoost() {
               />
             )}
 
-            {modo === "manual" && (
+            {/* {modo === "manual" && (
               <LoginForm
-                title="Login Manual"
+                title="Acceso Admin"
                 usernameLabel="Usuario:"
                 onSubmit={handleSubmitManual}
                 buttonText="Iniciar Sesión"
@@ -164,7 +164,7 @@ function LoginBoost() {
                 password={password}
                 setPassword={setPassword}
               />
-            )}
+            )} */}
           </div>
         </div>
       </div>
