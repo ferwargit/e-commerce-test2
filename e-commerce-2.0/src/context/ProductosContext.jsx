@@ -98,26 +98,20 @@ export function ProductosProvider({ children }) {
   }, []);
 
   const eliminarProducto = useCallback((id) => {
-    const confirmar = window.confirm("¿Estás seguro de eliminar?");
-    if (confirmar) {
-      return new Promise(async (res, rej) => {
-        try {
-          const respuesta = await fetch(
-            `https://6869ee8c2af1d945cea2cfff.mockapi.io/productos/${id}`,
-            {
-              method: "DELETE",
-            }
-          );
-          if (!respuesta.ok) throw new Error("Error al eliminar");
-          alert("Producto eliminado correctamente.");
-          res();
-        } catch (error) {
-          console.error(error.message);
-          alert("Hubo un problema al eliminar el producto.");
-          rej(error);
-        }
-      });
-    }
+    // QUITAMOS el window.confirm de aquí
+    return new Promise(async (res, rej) => {
+      try {
+        const respuesta = await fetch(
+          `https://6869ee8c2af1d945cea2cfff.mockapi.io/productos/${id}`,
+          { method: "DELETE" }
+        );
+        if (!respuesta.ok) throw new Error("Error en el servidor al eliminar");
+        res(); // Resolvemos la promesa en caso de éxito
+      } catch (error) {
+        console.error(error.message);
+        rej(error); // Rechazamos la promesa en caso de error
+      }
+    });
   }, []);
 
   return (

@@ -1,8 +1,8 @@
 import SEO from "./SEO";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import Swal from "sweetalert2";
 import ThemedSwal from "../assets/ThemedSwal";
+import { toast } from "react-toastify"; // 1. Importa toast
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
@@ -70,17 +70,34 @@ function ProductoDetalle() {
     });
   }
 
+  // --- INICIO DE LA REFACTORIZACIÓN ---
   const dispararEliminar = () => {
-    eliminarProducto(id)
-      .then(() => navegar("/productos"))
-      .catch((err) => {
-        dispararSweetBasico(
-          "Hubo un problema",
-          err.toString(),
-          "error",
-          "Cerrar"
-        );
-      });
+    // Usamos el nombre del producto encontrado para la alerta
+    const nombreProducto = productoEncontrado?.name || "este producto";
+
+    ThemedSwal.fire({
+      title: "¿Estás seguro?",
+      text: `No podrás revertir la eliminación de "${nombreProducto}"`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, ¡eliminar!",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "var(--color-danger)",
+      cancelButtonColor: "#4b5563",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const promise = eliminarProducto(id).then(() => {
+          // Navega a la lista de productos después del éxito
+          setTimeout(() => navegar("/admin"), 1500);
+        });
+
+        toast.promise(promise, {
+          pending: "Eliminando producto...",
+          success: "Producto eliminado con éxito. Redirigiendo...",
+          error: "Error al eliminar el producto.",
+        });
+      }
+    });
   };
 
   const sumarContador = () => setCantidad((c) => c + 1);
@@ -195,7 +212,7 @@ function ProductoDetalle() {
               </div>
             ) : (
               // Vista para el administrador
-              <div className="d-grid gap-2 d-md-flex">
+              <div className="d-grid gap-2 d-md-flex justify-content-center">
                 <StyledLinkButton
                   to={`/admin/editarProducto/${id}`}
                   $variant="primary"

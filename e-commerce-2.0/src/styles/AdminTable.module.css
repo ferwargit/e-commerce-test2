@@ -1,0 +1,17 @@
+/* src/styles/AdminTable.module.css */
+
+/* Clase principal para nuestra tabla personalizada */
+.customTable {
+  /* Sobrescribe el color de fondo base de table-dark con el nuestro */
+  --bs-table-bg: var(--color-background-light);
+  --bs-table-border-color: var(--color-border);
+  --bs-table-color: var(--color-text-primary);
+  --bs-table-hover-bg: var(--color-background-dark); /* Hover más oscuro */
+  --bs-table-striped-bg: rgba(17, 24, 39, 0.5); /* Striping sutil */
+}
+
+/* Estilo para la cabecera de la tabla */
+.tableHeader {
+  color: var(--color-text-muted);
+  border-bottom-width: 2px;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useProductosContext } from "../context/ProductosContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Asegúrate de importar los estilos de Toastify
 import { StyledButton, StyledLinkButton } from "./Button";
 import { StyledInput, StyledTextarea } from "./StyledFormElements";
@@ -96,7 +96,6 @@ function FormularioEdicion() {
   // 3. JSX del formulario modernizado
   return (
     <div className="container mt-5">
-      <ToastContainer position="top-center" autoClose={2000} />
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-10">
           <div

@@ -15,6 +15,8 @@ import { useEffect } from "react";
 import { useAuthContext } from "./context/AuthContext";
 import AdminProductos from "./components/AdminProductos"; // Importa el nuevo componente
 import Footer from "./components/Footer"; // Suponiendo que tienes o quieres un footer
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { verificacionLog } = useAuthContext();
@@ -28,6 +30,18 @@ function App() {
   return (
     <Router>
       <div className="app-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={3000} // El toast se cierra solo después de 3 segundos
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark" // ¡Importante para que coincida con nuestro diseño!
+        />
         <Nav />
         <main>
           <Routes>
