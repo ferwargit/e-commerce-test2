@@ -2,16 +2,77 @@
 
 /* Clase principal para nuestra tabla personalizada */
 .customTable {
-  /* Sobrescribe el color de fondo base de table-dark con el nuestro */
   --bs-table-bg: var(--color-background-light);
   --bs-table-border-color: var(--color-border);
   --bs-table-color: var(--color-text-primary);
-  --bs-table-hover-bg: var(--color-background-dark); /* Hover más oscuro */
-  --bs-table-striped-bg: rgba(17, 24, 39, 0.5); /* Striping sutil */
+  --bs-table-hover-bg: var(--color-background-dark);
+  --bs-table-striped-bg: rgba(17, 24, 39, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 /* Estilo para la cabecera de la tabla */
 .tableHeader {
   color: var(--color-text-muted);
   border-bottom-width: 2px;
+}
+
+/* --- INICIO DE LA LÓGICA RESPONSIVA --- */
+
+/* Estilos que se aplican SOLO en pantallas de menos de 768px */
+@media (max-width: 767.98px) {
+  /* 1. Ocultamos la cabecera de la tabla en móviles */
+  .customTable thead {
+    display: none;
+  }
+
+  /* 2. Hacemos que cada fila se comporte como una tarjeta */
+  .customTable tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(
+      --color-background-light
+    ) !important; /* Forzamos el fondo */
+  }
+
+  /* 3. Las celdas se apilan verticalmente */
+  .customTable td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .customTable td:last-child {
+    border-bottom: none;
+  }
+
+  /* 4. Añadimos las etiquetas de datos */
+  .customTable td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: calc(50% - 2rem);
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  /* Celdas especiales que no necesitan etiqueta */
+  .imageCell,
+  .actionsCell {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .imageCell::before,
+  .actionsCell::before {
+    display: none;
+  }
 }

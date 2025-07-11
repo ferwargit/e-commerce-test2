@@ -5,7 +5,7 @@ import { StyledLinkButton, StyledButton } from "./Button";
 import SEO from "./SEO";
 import { toast } from "react-toastify";
 import styles from "../styles/AdminTable.module.css";
-import ThemedSwal from "../assets/ThemedSwal"; // 1. Importa nuestra alerta tematizada
+import ThemedSwal from "../assets/ThemedSwal";
 
 function AdminProductos() {
   const { productos, obtenerProductos, terminoBusqueda, eliminarProducto } =
@@ -13,7 +13,6 @@ function AdminProductos() {
   const [cargando, setCargando] = useState(true);
 
   const cargarProductos = useCallback(async () => {
-    // No es necesario setCargando(true) aquí, ya que el estado inicial es true
     try {
       await obtenerProductos();
     } catch (err) {
@@ -27,41 +26,29 @@ function AdminProductos() {
     cargarProductos();
   }, [cargarProductos]);
 
-  // --- INICIO DE LA REFACTORIZACIÓN ---
   const handleEliminar = (id, nombreProducto) => {
-    // 2. Usamos ThemedSwal para la confirmación
     ThemedSwal.fire({
-      title: '¿Estás seguro?',
+      title: "¿Estás seguro?",
       text: `No podrás revertir la eliminación de "${nombreProducto}"`,
-      icon: 'warning', // Un ícono de advertencia es más apropiado aquí
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Sí, ¡eliminar!',
-      cancelButtonText: 'Cancelar',
-      // Usaremos nuestras variables de color para los botones
-      confirmButtonColor: 'var(--color-danger)',
-      cancelButtonColor: '#4b5563'
+      confirmButtonText: "Sí, ¡eliminar!",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "var(--color-danger)",
+      cancelButtonColor: "#4b5563",
     }).then((result) => {
-      // 3. Si el usuario confirma...
       if (result.isConfirmed) {
-        // Mostramos una notificación "toast" de carga mientras se procesa
         const promise = eliminarProducto(id).then(() => {
-          // No necesitamos el toast de éxito aquí, 'toast.promise' lo maneja
-          cargarProductos(); // Recarga la lista después de una eliminación exitosa
+          cargarProductos();
         });
-
-        // 4. Usamos toast.promise para manejar los resultados
-        toast.promise(
-          promise,
-          {
-            pending: 'Eliminando producto...',
-            success: 'Producto eliminado con éxito 👌',
-            error: 'Error al eliminar el producto 🤯'
-          }
-        );
+        toast.promise(promise, {
+          pending: "Eliminando producto...",
+          success: "Producto eliminado con éxito 👌",
+          error: "Error al eliminar el producto 🤯",
+        });
       }
     });
   };
-  // --- FIN DE LA REFACTORIZACIÓN ---
 
   const productosFiltrados = productos.filter((p) =>
     p.name.toLowerCase().includes(terminoBusqueda.toLowerCase())
@@ -71,14 +58,15 @@ function AdminProductos() {
     return (
       <div className="text-center my-5">
         <div className="spinner-border text-light" role="status">
-            <span className="visually-hidden">Cargando gestión de productos...</span>
+          <span className="visually-hidden">
+            Cargando gestión de productos...
+          </span>
         </div>
         <p className="mt-2 text-light">Cargando gestión de productos...</p>
       </div>
     );
   }
 
-  // Formateador de moneda para usar en el mapeo
   const formatPrice = (value) =>
     new Intl.NumberFormat("es-AR", {
       style: "currency",
@@ -96,13 +84,11 @@ function AdminProductos() {
           Gestión de Productos
         </h1>
         <div className="table-responsive">
-          {/* Combinamos las clases de Bootstrap con nuestro módulo */}
           <table
             className={`table table-dark table-striped table-hover align-middle ${styles.customTable}`}
           >
-            <thead>
-              {/* Aplicamos nuestra clase de cabecera */}
-              <tr className={styles.tableHeader}>
+            <thead className={styles.tableHeader}>
+              <tr>
                 <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Precio</th>
@@ -112,7 +98,7 @@ function AdminProductos() {
             <tbody>
               {productosFiltrados.map((producto) => (
                 <tr key={producto.id}>
-                  <td>
+                  <td data-label="Imagen" className={styles.imageCell}>
                     <img
                       src={producto.image}
                       alt={producto.name}
@@ -124,10 +110,13 @@ function AdminProductos() {
                       className="rounded"
                     />
                   </td>
-                  <td>{producto.name}</td>
-                  <td>{formatPrice(producto.price)}</td>
-                  <td className="text-end">
-                    <div className="btn-group gap-2">
+                  <td data-label="Nombre">{producto.name}</td>
+                  <td data-label="Precio">{formatPrice(producto.price)}</td>
+                  <td
+                    data-label="Acciones"
+                    className={`${styles.actionsCell} text-end`}
+                  >
+                    <div className="btn-group gap-2 justify-content-center justify-content-md-end">
                       <StyledLinkButton
                         to={`/admin/editarProducto/${producto.id}`}
                         $variant="primary"
@@ -136,7 +125,9 @@ function AdminProductos() {
                         Editar
                       </StyledLinkButton>
                       <StyledButton
-                        onClick={() => handleEliminar(producto.id, producto.name)}
+                        onClick={() =>
+                          handleEliminar(producto.id, producto.name)
+                        }
                         $variant="danger"
                         style={{ padding: "5px 10px", fontSize: "14px" }}
                       >
