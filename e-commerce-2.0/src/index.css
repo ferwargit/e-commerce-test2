@@ -35,11 +35,85 @@ body {
 
 a {
   color: var(--color-primary);
-  text-decoration: none; /* Cambiado de inherit para asegurar que no haya subrayado */
+  text-decoration: none;
   transition: color 0.2s ease-in-out;
 }
 a:hover {
   color: var(--color-primary-hover);
 }
 
-/* LA REGLA PARA #root SOLO DEBE ESTAR EN App.css, LA BORRAMOS DE AQUÍ */
+/* --- ESTILOS GLOBALES DE FORMULARIO --- */
+
+/* Estilo para las etiquetas */
+label {
+  display: inline-block;
+  /* color: var(--color-text-primary); */
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* --- INICIO DE LA SOLUCIÓN: TEMA OSCURO PARA SWEETALERT2 --- */
+
+.swal2-popup.swal2-custom-dark {
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-border);
+}
+
+.swal2-popup.swal2-custom-dark .swal2-title {
+  color: var(--color-text-primary);
+}
+
+.swal2-popup.swal2-custom-dark .swal2-html-container {
+  color: var(--color-text-muted);
+}
+
+/* Estilos para los botones de la alerta */
+.swal2-popup.swal2-custom-dark .swal2-confirm-button,
+.swal2-popup.swal2-custom-dark .swal2-cancel-button {
+  border-radius: 8px; /* Bordes consistentes con nuestros botones */
+  padding: 10px 20px;
+  border: none;
+  box-shadow: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Añadimos espacio entre los botones */
+.swal2-popup.swal2-custom-dark .swal2-actions {
+  gap: 1rem; /* 1rem = 16px por defecto. Ajusta si lo quieres más grande o pequeño */
+}
+
+/* Botón de Confirmar (verde) */
+.swal2-popup.swal2-custom-dark .swal2-confirm-button {
+  background-color: var(--color-primary);
+}
+.swal2-popup.swal2-custom-dark .swal2-confirm-button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+/* Botón de Cancelar (gris) */
+.swal2-popup.swal2-custom-dark .swal2-cancel-button {
+  background-color: #4b5563; /* Un gris neutro */
+}
+.swal2-popup.swal2-custom-dark .swal2-cancel-button:hover {
+  background-color: #374151;
+}
+
+/* Icono de éxito (hacemos el círculo y el check más visibles) */
+.swal2-popup.swal2-custom-dark
+  .swal2-icon.swal2-success
+  .swal2-success-line-tip,
+.swal2-popup.swal2-custom-dark
+  .swal2-icon.swal2-success
+  .swal2-success-line-long {
+  stroke: var(--color-primary);
+}
+.swal2-popup.swal2-custom-dark .swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(
+    20,
+    184,
+    166,
+    0.3
+  ); /* Un borde de nuestro color primario semi-transparente */
+}
+/* --- FIN DE LA SOLUCIÓN --- */

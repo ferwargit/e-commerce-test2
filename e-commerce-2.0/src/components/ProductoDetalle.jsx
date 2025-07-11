@@ -1,7 +1,8 @@
 import SEO from "./SEO";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+import ThemedSwal from "../assets/ThemedSwal";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
@@ -32,13 +33,32 @@ function ProductoDetalle() {
 
     agregarAlCarrito({ ...productoEncontrado, cantidad });
 
-    Swal.fire({
+    // Swal.fire({
+    //   title: "¡Producto Agregado!",
+    //   text: `Se ha añadido "${productoEncontrado.name}" a tu carrito.`,
+    //   icon: "success",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#28a745", // Verde (éxito)
+    //   cancelButtonColor: "#6c757d", // Gris (secundario)
+    //   confirmButtonText: "Ir al Carrito",
+    //   cancelButtonText: "Seguir Comprando",
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     navegar("/carrito");
+    //   } else if (result.isDismissed) {
+    //     navegar("/productos");
+    //   }
+    // });
+
+    // 2. Usamos nuestra nueva alerta
+    ThemedSwal.fire({
       title: "¡Producto Agregado!",
       text: `Se ha añadido "${productoEncontrado.name}" a tu carrito.`,
       icon: "success",
       showCancelButton: true,
-      confirmButtonColor: "#28a745", // Verde (éxito)
-      cancelButtonColor: "#6c757d", // Gris (secundario)
+      // Los colores ahora se controlan desde el CSS, podemos quitar esto
+      // confirmButtonColor: '#28a745',
+      // cancelButtonColor: '#6c757d',
       confirmButtonText: "Ir al Carrito",
       cancelButtonText: "Seguir Comprando",
     }).then((result) => {
@@ -69,7 +89,7 @@ function ProductoDetalle() {
   if (cargando) {
     return (
       <div className="container text-center my-5">
-        <div className="spinner-border" role="status">
+        <div className="spinner-border text-light" role="status">
           <span className="visually-hidden">Cargando...</span>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function Carrito() {
       <div className="container text-center my-5">
         <div className="card p-5 shadow-sm" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)'}}>
           <h1 className="card-title" style={{ color: 'var(--color-text-primary)' }}>Tu carrito está vacío</h1>
-          <p className="card-text text-muted" >
+          <p className="card-text" style={{ color: 'var(--color-text-muted)' }}>
             Parece que todavía no has agregado productos
           </p>
           <div className="mt-4">

@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useProductosContext } from "../context/ProductosContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Asegúrate de importar los estilos de Toastify
 import { StyledButton, StyledLinkButton } from "./Button";
+import { StyledInput, StyledTextarea } from "./StyledFormElements";
 
 function FormularioEdicion() {
   const { obtenerProducto, editarProducto } = useProductosContext();
@@ -69,7 +70,7 @@ function FormularioEdicion() {
   if (cargando) {
     return (
       <div className="container text-center my-5">
-        <div className="spinner-border" role="status">
+        <div className="spinner-border text-light" role="status">
           <span className="visually-hidden">
             Cargando datos del producto...
           </span>
@@ -98,15 +99,26 @@ function FormularioEdicion() {
       <ToastContainer position="top-center" autoClose={2000} />
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-10">
-          <div className="card shadow-lg border-0" style={{ backgroundColor: 'var(--color-background-light)', borderColor: 'var(--color-border)' }}>
+          <div
+            className="card shadow-lg border-0"
+            style={{
+              backgroundColor: "var(--color-background-light)",
+              borderColor: "var(--color-border)",
+            }}
+          >
             <div className="card-body p-4">
-              <h2 className="card-title text-center mb-4" style={{ color: 'var(--color-text-primary)' }}>Editar Producto</h2>
+              <h2
+                className="card-title text-center mb-4"
+                style={{ color: "var(--color-text-primary)" }}
+              >
+                Editar Producto
+              </h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label htmlFor="name" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
+                  <label htmlFor="name" className="form-label">
                     Nombre del Producto
                   </label>
-                  <input
+                  <StyledInput
                     id="name"
                     type="text"
                     name="name"
@@ -114,19 +126,14 @@ function FormularioEdicion() {
                     onChange={handleChange}
                     className="form-control"
                     required
-                    style={{ 
-                        backgroundColor: 'var(--color-background-dark)', 
-                        color: 'var(--color-text-primary)', 
-                        borderColor: 'var(--color-border)' 
-                    }}
                   />
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="image" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
+                  <label htmlFor="image" className="form-label">
                     URL de la Imagen
                   </label>
-                  <input
+                  <StyledInput
                     id="image"
                     type="text"
                     name="image"
@@ -134,21 +141,16 @@ function FormularioEdicion() {
                     onChange={handleChange}
                     className="form-control"
                     required
-                    style={{ 
-                        backgroundColor: 'var(--color-background-dark)', 
-                        color: 'var(--color-text-primary)', 
-                        borderColor: 'var(--color-border)' 
-                    }}
                   />
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="price" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
+                  <label htmlFor="price" className="form-label">
                     Precio
                   </label>
                   <div className="input-group">
                     <span className="input-group-text">$</span>
-                    <input
+                    <StyledInput
                       id="price"
                       type="number"
                       name="price"
@@ -158,20 +160,15 @@ function FormularioEdicion() {
                       required
                       min="0.01"
                       step="0.01"
-                      style={{ 
-                        backgroundColor: 'var(--color-background-dark)', 
-                        color: 'var(--color-text-primary)', 
-                        borderColor: 'var(--color-border)' 
-                    }}
                     />
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="description" className="form-label" style={{ color: 'var(--color-text-muted)' }}>
+                  <label htmlFor="description" className="form-label">
                     Descripción
                   </label>
-                  <textarea
+                  <StyledTextarea
                     id="description"
                     name="description"
                     value={producto.description || ""}
@@ -179,11 +176,6 @@ function FormularioEdicion() {
                     className="form-control"
                     rows="4"
                     required
-                    style={{ 
-                        backgroundColor: 'var(--color-background-dark)', 
-                        color: 'var(--color-text-primary)', 
-                        borderColor: 'var(--color-border)' 
-                    }}
                   />
                 </div>
 

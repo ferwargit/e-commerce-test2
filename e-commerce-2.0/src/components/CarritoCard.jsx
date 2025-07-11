@@ -1,5 +1,4 @@
 // src/components/CarritoCard.jsx
-import React from "react";
 import { StyledButton } from "./Button";
 
 function CarritoCard({ producto, funcionDisparadora }) {
@@ -70,7 +69,10 @@ function CarritoCard({ producto, funcionDisparadora }) {
               <span style={{ color: "var(--color-text-primary)" }}>
                 Cantidad: {producto.cantidad}
               </span>
-              <span className="fw-bold fs-5">
+              <span
+                className="fw-bold fs-5"
+                style={{ color: "var(--color-text-primary)" }}
+              >
                 {formatPrice(producto.price * producto.cantidad)}
               </span>
             </div>
