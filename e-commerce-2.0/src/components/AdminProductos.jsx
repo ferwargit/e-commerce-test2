@@ -27,10 +27,6 @@ function AdminProductos() {
     cargarProductos();
   }, [cargarProductos]);
 
-
-
-
-
   // --- INICIO DE LA REFACTORIZACIÓN ---
   const handleEliminar = (id, nombreProducto) => {
     // 2. Usamos ThemedSwal para la confirmación
@@ -66,11 +62,6 @@ function AdminProductos() {
     });
   };
   // --- FIN DE LA REFACTORIZACIÓN ---
-
-
-
-
-
 
   const productosFiltrados = productos.filter((p) =>
     p.name.toLowerCase().includes(terminoBusqueda.toLowerCase())

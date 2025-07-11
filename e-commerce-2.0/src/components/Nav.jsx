@@ -19,7 +19,7 @@ import {
 function Nav() {
   const { productosCarrito } = useContext(CarritoContext);
   const { user, admin, logout } = useAuthContext();
-  const { setTerminoBusqueda } = useProductosContext();
+  const { terminoBusqueda, setTerminoBusqueda } = useProductosContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -83,8 +83,8 @@ function Nav() {
                 type="search"
                 placeholder="Buscar productos..."
                 aria-label="Buscar"
-                
-                onChange={(e) => setTerminoBusqueda(e.target.value)}
+                value={terminoBusqueda} // 3. AÑADIDO
+                onChange={handleBusquedaChange} // Usamos la misma función que el cliente
                 style={{
                   backgroundColor: "var(--color-background-light)",
                   color: "var(--color-text-primary)",
@@ -190,7 +190,7 @@ function Nav() {
               type="search"
               placeholder="Buscar productos..."
               aria-label="Buscar"
-              
+              value={terminoBusqueda} // 3. AÑADIDO
               onChange={handleBusquedaChange}
               style={{
                 backgroundColor: "var(--color-background-light)",

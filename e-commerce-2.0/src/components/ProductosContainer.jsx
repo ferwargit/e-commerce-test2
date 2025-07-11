@@ -80,6 +80,19 @@ function ProductosContainer() {
     <>
       <SEO title="Nuestros Productos" />
       <div className="container mt-4">
+        {/* Encabezado de la sección de productos */}
+        <div className="text-center mb-5">
+          <h1
+            className="display-4 fw-bold"
+            style={{ color: "var(--color-text-primary)" }}
+          >
+            Explora Nuestro Catálogo
+          </h1>
+          <p className="lead" style={{ color: "var(--color-text-muted)" }}>
+            Los mejores productos de tecnología, seleccionados para ti
+          </p>
+        </div>
+
         <div className="row g-4">
           {/* Mapeamos sobre los productos de la página actual */}
           {currentProducts.map((producto) => (

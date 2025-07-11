@@ -1,63 +1,75 @@
 // src/components/Carrito.jsx
 import SEO from "./SEO";
-import { Navigate, useNavigate } from "react-router-dom"; // 1. Importa useNavigate
+import { Navigate, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext.jsx";
 import { useAuthContext } from "../context/AuthContext.jsx";
 import CarritoCard from "./CarritoCard";
 import { StyledButton, StyledLinkButton } from "./Button";
-import ThemedSwal from "../assets/ThemedSwal"; // 2. Importa nuestra alerta tematizada
-import { toast } from "react-toastify"; // 3. Importa toast
+import ThemedSwal from "../assets/ThemedSwal";
+import { toast } from "react-toastify";
 
 export default function Carrito() {
   const { user, admin } = useAuthContext();
   const { productosCarrito, vaciarCarrito, borrarProductoCarrito } =
     useContext(CarritoContext);
-  const navigate = useNavigate(); // 4. Inicializa el hook de navegación
+  const navigate = useNavigate();
 
-  const total = productosCarrito.reduce(
-    (subTotal, producto) => subTotal + producto.price * producto.cantidad,
+  // 1. CALCULAR SUBTOTAL
+  const subtotal = productosCarrito.reduce(
+    (total, producto) => total + producto.price * producto.cantidad,
     0
   );
 
-  // Formateador de moneda
+  // 2. LÓGICA DE CÁLCULO DE ENVÍO
+  let costoEnvio = 0;
+  if (subtotal > 0) {
+    // Solo se calcula si hay productos
+    if (subtotal < 50000) {
+      costoEnvio = 5000;
+    } else if (subtotal >= 50000 && subtotal < 200000) {
+      costoEnvio = 2500;
+    } else {
+      // Para compras de $200.000 o más
+      costoEnvio = 0;
+    }
+  }
+
+  // 3. CALCULAR TOTAL FINAL
+  const totalFinal = subtotal + costoEnvio;
+
+  // Función para formatear precios
   const formatPrice = (value) =>
     new Intl.NumberFormat("es-AR", {
       style: "currency",
       currency: "ARS",
     }).format(value);
 
-
-
-
-    // --- INICIO DE LA NUEVA LÓGICA ---
+  // 4. FUNCIÓN PARA MANEJAR EL PAGO
   const handleProcederAlPago = () => {
     ThemedSwal.fire({
-      title: 'Confirmar Pedido',
-      html: `Estás a punto de confirmar tu compra por un total de <strong>${formatPrice(total)}</strong>.`,
-      icon: 'info',
+      title: "Confirmar Pedido",
+      // Se usa el totalFinal para el mensaje
+      html: `Estás a punto de confirmar tu compra por un total de <strong>${formatPrice(
+        totalFinal
+      )}</strong>.`,
+      icon: "info",
       showCancelButton: true,
-      confirmButtonText: 'Confirmar y Pagar',
-      cancelButtonText: 'Volver al carrito'
+      confirmButtonText: "Confirmar y Pagar",
+      cancelButtonText: "Volver al carrito",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Simulación de una compra exitosa
-        toast.success('¡Gracias por tu compra! Tu pedido está en camino.');
+        toast.success("¡Gracias por tu compra! Tu pedido está en camino.");
         vaciarCarrito();
-        setTimeout(() => navigate('/'), 2000); // Redirige a la home después de 2s
+        setTimeout(() => navigate("/"), 2000);
       }
     });
   };
-  // --- FIN DE LA NUEVA LÓGICA ---
 
-
-
-
+  // Redirecciones por rol
   if (admin) {
-    // Si es admin, lo redirigimos a su panel
     return <Navigate to="/admin" replace />;
   }
-
   if (!user) {
     return <Navigate to="/login" replace />;
   }
@@ -96,7 +108,6 @@ export default function Carrito() {
   return (
     <>
       <SEO title="Carrito de Compras" />
-
       <div className="container my-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h1 style={{ color: "var(--color-text-primary)" }}>
@@ -108,7 +119,6 @@ export default function Carrito() {
         </div>
 
         <div className="row g-5">
-          {/* Columna de Items del Carrito */}
           <div className="col-lg-8">
             {productosCarrito.map((producto) => (
               <CarritoCard
@@ -119,7 +129,6 @@ export default function Carrito() {
             ))}
           </div>
 
-          {/* Columna del Resumen del Pedido */}
           <div className="col-lg-4">
             <div
               className="card shadow-sm"
@@ -145,8 +154,10 @@ export default function Carrito() {
                     }}
                   >
                     <span>Subtotal</span>
-                    <span>{formatPrice(total)}</span>
+                    <span>{formatPrice(subtotal)}</span>
                   </li>
+
+                  {/* --- JSX ACTUALIZADO --- */}
                   <li
                     className="list-group-item d-flex justify-content-between"
                     style={{
@@ -156,7 +167,14 @@ export default function Carrito() {
                     }}
                   >
                     <span>Envío</span>
-                    <span>A calcular</span>
+                    <span
+                      style={{
+                        color:
+                          costoEnvio === 0 ? "var(--color-primary)" : "inherit",
+                      }}
+                    >
+                      {costoEnvio === 0 ? "¡Gratis!" : formatPrice(costoEnvio)}
+                    </span>
                   </li>
                   <li
                     className="list-group-item d-flex justify-content-between fw-bold fs-5"
@@ -167,8 +185,9 @@ export default function Carrito() {
                     }}
                   >
                     <span>Total</span>
-                    <span>{formatPrice(total)}</span>
+                    <span>{formatPrice(totalFinal)}</span>
                   </li>
+                  {/* --- FIN DEL JSX ACTUALIZADO --- */}
                 </ul>
                 <div className="d-grid mt-4">
                   <StyledButton
