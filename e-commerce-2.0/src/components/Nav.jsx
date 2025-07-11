@@ -5,6 +5,7 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
+import { StyledInput } from "./StyledFormElements"; // 1. Importa el componente de input estilizado
 
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 import { RiAdminFill, RiLoginBoxLine, RiAddBoxFill } from "react-icons/ri";
@@ -77,11 +78,12 @@ function Nav() {
               role="search"
               onSubmit={(e) => e.preventDefault()}
             >
-              <input
+              <StyledInput
                 className="form-control me-2"
                 type="search"
                 placeholder="Buscar productos..."
                 aria-label="Buscar"
+                
                 onChange={(e) => setTerminoBusqueda(e.target.value)}
                 style={{
                   backgroundColor: "var(--color-background-light)",
@@ -183,11 +185,12 @@ function Nav() {
             role="search"
             onSubmit={(e) => e.preventDefault()}
           >
-            <input
+            <StyledInput
               className="form-control me-2"
               type="search"
               placeholder="Buscar productos..."
               aria-label="Buscar"
+              
               onChange={handleBusquedaChange}
               style={{
                 backgroundColor: "var(--color-background-light)",

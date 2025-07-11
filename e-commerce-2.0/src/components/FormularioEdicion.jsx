@@ -71,7 +71,9 @@ function FormularioEdicion() {
     return (
       <div className="container text-center my-5">
         <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">Cargando datos del producto...</span>
+          <span className="visually-hidden">
+            Cargando datos del producto...
+          </span>
         </div>
         <p className="mt-2 text-light">Cargando datos del producto...</p>
       </div>
@@ -124,6 +126,11 @@ function FormularioEdicion() {
                     onChange={handleChange}
                     className="form-control"
                     required
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                   />
                 </div>
 
@@ -139,6 +146,11 @@ function FormularioEdicion() {
                     onChange={handleChange}
                     className="form-control"
                     required
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                   />
                 </div>
 
@@ -158,6 +170,11 @@ function FormularioEdicion() {
                       required
                       min="0.01"
                       step="0.01"
+                      style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                     />
                   </div>
                 </div>
@@ -174,6 +191,11 @@ function FormularioEdicion() {
                     className="form-control"
                     rows="4"
                     required
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                   />
                 </div>
 

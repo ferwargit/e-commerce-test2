@@ -1,48 +1,53 @@
-import { createContext, useState, useContext } from "react";
+// src/context/AuthContext.jsx
+
+import { createContext, useState, useContext, useEffect } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  // 🔄 Cargar desde localStorage si existe
-  const storedUser = localStorage.getItem("user");
-  const storedIsAdmin = localStorage.getItem("isAdmin") === "true";
+  // Siempre leeremos desde la clave 'user'
+  const [user, setUser] = useState(() => localStorage.getItem("user") || null);
+  const [admin, setAdmin] = useState(() => localStorage.getItem("isAdmin") === "true");
 
-  const [user, setUser] = useState(storedUser || null);
-  const [admin, setAdmin] = useState(storedUser ? storedIsAdmin : false);
+  // Usamos useEffect para mantener el localStorage sincronizado cuando el estado cambia.
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", user);
+    } else {
+      localStorage.removeItem("user");
+    }
+
+    if (admin) {
+      localStorage.setItem("isAdmin", "true");
+    } else {
+      localStorage.removeItem("isAdmin");
+    }
+  }, [user, admin]);
+
 
   const login = (username) => {
-    const token = `fake-token-${username}`;
-    localStorage.setItem("authToken", token);
-    localStorage.setItem("user", username);
-
     const isAdmin = username === "admin";
-    localStorage.setItem("isAdmin", isAdmin.toString());
-
-    setUser(username);
-    setAdmin(isAdmin);
+    if (isAdmin) {
+      setAdmin(true);
+      setUser(username); // También seteamos el user como 'admin'
+    } else {
+      setUser(username);
+      setAdmin(false);
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
-    localStorage.removeItem("isAdmin");
     setUser(null);
     setAdmin(false);
+    // El useEffect se encargará de limpiar el localStorage
   };
 
-  function verificacionLog() {
-    const userToken = localStorage.getItem("authToken");
-    if (userToken && userToken == "fake-token-admin") {
-      setAdmin(true);
-      return;
-    }
-    if (userToken) {
-      setUser(userToken);
-    }
-  }
+  // Esta función ya no es necesaria, la lógica ahora está en el estado inicial y el useEffect.
+  // function verificacionLog() { ... }
 
+  // El valor del Provider ahora es más simple
   return (
-    <AuthContext.Provider value={{ user, login, logout, admin, verificacionLog }}>
+    <AuthContext.Provider value={{ user, admin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

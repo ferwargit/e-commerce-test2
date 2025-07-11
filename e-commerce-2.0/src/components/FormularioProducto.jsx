@@ -109,6 +109,11 @@ function FormularioProducto() {
                     className="form-control"
                     placeholder="Ej: Teclado Mecánico RGB"
                     required
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                   />
                 </div>
 
@@ -125,6 +130,11 @@ function FormularioProducto() {
                     className="form-control"
                     placeholder="/images/products/nombre-del-producto.jpg"
                     required
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                   />
                 </div>
 
@@ -145,6 +155,11 @@ function FormularioProducto() {
                       required
                       min="0.01"
                       step="0.01"
+                      style={{
+                        backgroundColor: "var(--color-background-dark)",
+                        color: "var(--color-text-primary)",
+                        borderColor: "var(--color-border)",
+                      }}
                     />
                   </div>
                 </div>
@@ -162,6 +177,11 @@ function FormularioProducto() {
                     rows="4"
                     placeholder="Describe el producto aquí..."
                     required
+                    style={{
+                      backgroundColor: "var(--color-background-dark)",
+                      color: "var(--color-text-primary)",
+                      borderColor: "var(--color-border)",
+                    }}
                   />
                 </div>
 
