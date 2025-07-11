@@ -109,6 +109,7 @@ function ProductoDetalle() {
         <div className="spinner-border text-light" role="status">
           <span className="visually-hidden">Cargando...</span>
         </div>
+        <p className="mt-2 text-light">Cargando producto...</p>
       </div>
     );
   }

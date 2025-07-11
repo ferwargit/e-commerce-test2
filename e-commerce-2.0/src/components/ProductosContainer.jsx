@@ -38,11 +38,11 @@ function ProductosContainer() {
   // Mensaje de carga mejorado
   if (cargando) {
     return (
-      <div className="container text-center mt-5">
+      <div className="container text-center my-5">
         <div className="spinner-border text-light" role="status">
           <span className="visually-hidden">Cargando...</span>
         </div>
-        <p className="mt-2">Cargando productos...</p>
+        <p className="mt-2 text-light">Cargando productos...</p>
       </div>
     );
   }

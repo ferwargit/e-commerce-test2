@@ -71,10 +71,9 @@ function FormularioEdicion() {
     return (
       <div className="container text-center my-5">
         <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">
-            Cargando datos del producto...
-          </span>
+          <span className="visually-hidden">Cargando datos del producto...</span>
         </div>
+        <p className="mt-2 text-light">Cargando datos del producto...</p>
       </div>
     );
   }

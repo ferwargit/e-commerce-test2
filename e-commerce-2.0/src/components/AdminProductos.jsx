@@ -78,10 +78,11 @@ function AdminProductos() {
 
   if (cargando) {
     return (
-      <div className="container text-center my-5">
+      <div className="text-center my-5">
         <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">Cargando...</span>
+            <span className="visually-hidden">Cargando gestión de productos...</span>
         </div>
+        <p className="mt-2 text-light">Cargando gestión de productos...</p>
       </div>
     );
   }
