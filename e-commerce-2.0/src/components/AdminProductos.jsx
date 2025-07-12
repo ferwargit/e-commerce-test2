@@ -50,9 +50,14 @@ function AdminProductos() {
     });
   };
 
-  const productosFiltrados = productos.filter((p) =>
-    p.name.toLowerCase().includes(terminoBusqueda.toLowerCase())
-  );
+  // --- INICIO DE LA CORRECCIÓN ---
+
+  // Filtramos Y LUEGO ordenamos los productos en una sola cadena de métodos
+  const productosFiltradosYOrdenados = productos
+    .filter((p) => p.name.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  // --- FIN DE LA CORRECCIÓN ---
 
   if (cargando) {
     return (
@@ -96,7 +101,7 @@ function AdminProductos() {
               </tr>
             </thead>
             <tbody>
-              {productosFiltrados.map((producto) => (
+              {productosFiltradosYOrdenados.map((producto) => (
                 <tr key={producto.id}>
                   <td data-label="Imagen" className={styles.imageCell}>
                     <img
@@ -140,7 +145,7 @@ function AdminProductos() {
             </tbody>
           </table>
         </div>
-        {productosFiltrados.length === 0 && (
+        {productosFiltradosYOrdenados.length === 0 && (
           <p className="text-center mt-3 text-muted">
             No se encontraron productos con ese término de búsqueda.
           </p>

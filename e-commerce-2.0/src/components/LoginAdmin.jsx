@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import LoginForm from "./LoginForm";
 import SEO from "./SEO";
+import ThemedSwal from "../assets/ThemedSwal"; // 1. Importa nuestra alerta tematizada
 
 function LoginAdmin() {
   const [usuario, setUsuario] = useState("");
@@ -29,7 +30,15 @@ function LoginAdmin() {
       // El useEffect de arriba se encargará de la redirección de todas formas
       // cuando el estado 'admin' cambie a true.
     } else {
-      alert("Credenciales de administrador incorrectas");
+      // --- INICIO DE LA CORRECCIÓN ---
+      // Reemplazamos el alert() nativo por nuestro ThemedSwal
+      ThemedSwal.fire({
+        title: "Error de Acceso",
+        text: "Las credenciales de administrador no son correctas.",
+        icon: "error",
+        confirmButtonText: "Cerrar",
+      });
+      // --- FIN DE LA CORRECCIÓN ---
     }
   };
 

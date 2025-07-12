@@ -1,12 +1,30 @@
+// src/components/ProductoDetalle.jsx
 import SEO from "./SEO";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ThemedSwal from "../assets/ThemedSwal";
-import { toast } from "react-toastify"; // 1. Importa toast
+import { toast } from "react-toastify";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 import { useProductosContext } from "../context/ProductosContext";
 import { StyledButton, StyledLinkButton } from "./Button";
+import styled from "styled-components";
+
+// Componente estilizado para el contenedor de la imagen de detalle
+const ImageWrapper = styled.div`
+  padding: 2rem;
+  border-radius: 16px;
+
+  /* --- INICIO DE LA SOLUCIÓN: GRADIENTE LINEAL --- */
+  /* Aplicamos el mismo gradiente para una consistencia visual perfecta */
+  background: linear-gradient(
+    145deg,
+    var(--color-background-light) 0%,
+    var(--color-background-dark) 100%
+  );
+  border: 1px solid var(--color-border);
+  /* --- FIN DE LA SOLUCIÓN --- */
+`;
 
 function ProductoDetalle() {
   const navegar = useNavigate();
@@ -30,35 +48,12 @@ function ProductoDetalle() {
 
   function funcionCarrito() {
     if (cantidad < 1) return;
-
     agregarAlCarrito({ ...productoEncontrado, cantidad });
-
-    // Swal.fire({
-    //   title: "¡Producto Agregado!",
-    //   text: `Se ha añadido "${productoEncontrado.name}" a tu carrito.`,
-    //   icon: "success",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#28a745", // Verde (éxito)
-    //   cancelButtonColor: "#6c757d", // Gris (secundario)
-    //   confirmButtonText: "Ir al Carrito",
-    //   cancelButtonText: "Seguir Comprando",
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     navegar("/carrito");
-    //   } else if (result.isDismissed) {
-    //     navegar("/productos");
-    //   }
-    // });
-
-    // 2. Usamos nuestra nueva alerta
     ThemedSwal.fire({
       title: "¡Producto Agregado!",
       text: `Se ha añadido "${productoEncontrado.name}" a tu carrito.`,
       icon: "success",
       showCancelButton: true,
-      // Los colores ahora se controlan desde el CSS, podemos quitar esto
-      // confirmButtonColor: '#28a745',
-      // cancelButtonColor: '#6c757d',
       confirmButtonText: "Ir al Carrito",
       cancelButtonText: "Seguir Comprando",
     }).then((result) => {
@@ -70,11 +65,8 @@ function ProductoDetalle() {
     });
   }
 
-  // --- INICIO DE LA REFACTORIZACIÓN ---
   const dispararEliminar = () => {
-    // Usamos el nombre del producto encontrado para la alerta
     const nombreProducto = productoEncontrado?.name || "este producto";
-
     ThemedSwal.fire({
       title: "¿Estás seguro?",
       text: `No podrás revertir la eliminación de "${nombreProducto}"`,
@@ -87,10 +79,8 @@ function ProductoDetalle() {
     }).then((result) => {
       if (result.isConfirmed) {
         const promise = eliminarProducto(id).then(() => {
-          // Navega a la lista de productos después del éxito
           setTimeout(() => navegar("/admin"), 1500);
         });
-
         toast.promise(promise, {
           pending: "Eliminando producto...",
           success: "Producto eliminado con éxito. Redirigiendo...",
@@ -128,13 +118,11 @@ function ProductoDetalle() {
     );
   }
 
-  // Formateador de moneda para consistencia
   const formattedPrice = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
   }).format(productoEncontrado.price);
 
-  // 2. Nuevo layout con Bootstrap
   return (
     <>
       <SEO
@@ -144,13 +132,14 @@ function ProductoDetalle() {
       <div className="container my-5">
         <div className="row g-5 align-items-center">
           <div className="col-lg-6">
-            <img
-              src={productoEncontrado.image}
-              alt={productoEncontrado.name}
-              className="img-fluid rounded shadow-lg"
-            />
+            <ImageWrapper>
+              <img
+                src={productoEncontrado.image}
+                alt={productoEncontrado.name}
+                className="img-fluid rounded"
+              />
+            </ImageWrapper>
           </div>
-
           <div className="col-lg-6">
             <h1
               className="display-5 fw-bold"
@@ -167,17 +156,13 @@ function ProductoDetalle() {
             >
               {productoEncontrado.description}
             </p>
-
             <hr
               className="my-4"
               style={{ borderColor: "var(--color-border)" }}
             />
-
             {!admin ? (
-              // Vista para el cliente
               <div className="d-flex align-items-center gap-3">
                 <div className="input-group" style={{ maxWidth: "150px" }}>
-                  {/* Usamos btn-outline-light para el tema oscuro */}
                   <button
                     className="btn btn-outline-light"
                     type="button"
@@ -212,7 +197,6 @@ function ProductoDetalle() {
                 </StyledButton>
               </div>
             ) : (
-              // Vista para el administrador
               <div className="d-grid gap-2 d-md-flex justify-content-center">
                 <StyledLinkButton
                   to={`/admin/editarProducto/${id}`}
