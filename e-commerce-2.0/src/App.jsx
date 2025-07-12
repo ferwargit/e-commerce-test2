@@ -11,21 +11,12 @@ import LoginAdmin from "./components/LoginAdmin";
 import LoginBoost from "./components/LoginBoost";
 import FormularioProducto from "./components/FormularioProducto";
 import FormularioEdicion from "./components/FormularioEdicion";
-// import { useEffect } from "react";
-// import { useAuthContext } from "./context/AuthContext";
 import AdminProductos from "./components/AdminProductos"; // Importa el nuevo componente
 import Footer from "./components/Footer"; // Suponiendo que tienes o quieres un footer
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  // const { verificacionLog } = useAuthContext();
-
-  // useEffect(() => {
-  //   // Verifica el estado de autenticación del usuario al cargar la aplicación
-  //   verificacionLog();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <Router>

@@ -8,7 +8,7 @@ const Feature = ({ icon, title, text }) => (
     <div className="fs-1 mb-3" style={{ color: "var(--color-primary)" }}>
       {icon}
     </div>
-    <h3 className="h4 mb-3">{title}</h3>
+    <h3 className="h4 mb-3" style={{ color: "var(--color-text-primary)" }}>{title}</h3>
     <p className="px-md-3" style={{ color: "var(--color-text-muted)" }}>
       {text}
     </p>
@@ -26,7 +26,7 @@ function About() {
         {/* --- SECCIÓN PRINCIPAL --- */}
         <div className="row justify-content-center text-center mb-5">
           <div className="col-lg-8">
-            <h1 className="display-4 fw-bold">Nuestra Misión</h1>
+            <h1 className="display-4 fw-bold" style={{ color: "var(--color-text-primary)" }}>Nuestra Misión</h1>
             <p
               className="lead mt-3"
               style={{ color: "var(--color-text-muted)" }}

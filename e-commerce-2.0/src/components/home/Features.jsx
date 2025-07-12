@@ -6,7 +6,7 @@ const Feature = ({ icon, title, text }) => (
     <div className="fs-1 mb-3" style={{ color: "var(--color-primary)" }}>
       {icon}
     </div>
-    <h3 className="h4">{title}</h3>
+    <h3 className="h4 mb-3" style={{ color: "var(--color-text-primary)" }}>{title}</h3>
     <p style={{ color: "var(--color-text-muted)" }}>{text}</p>
   </div>
 );

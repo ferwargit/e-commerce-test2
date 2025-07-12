@@ -25,7 +25,7 @@ function FeaturedProducts() {
   return (
     <div className="container my-5 py-5">
       <div className="text-center mb-5">
-        <h2 className="display-5 fw-bold">Productos Destacados</h2>
+        <h2 className="display-5 fw-bold" style={{ color: "var(--color-text-primary)" }}>Productos Destacados</h2>
         <p className="lead" style={{ color: "var(--color-text-muted)" }}>
           Una selección de nuestros items más populares.
         </p>
