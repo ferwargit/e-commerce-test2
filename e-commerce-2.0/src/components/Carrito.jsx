@@ -1,6 +1,6 @@
 // src/components/Carrito.jsx
 import SEO from "./SEO";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { CarritoContext } from "../context/CarritoContext.jsx";
 import { useAuthContext } from "../context/AuthContext.jsx";
@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 export default function Carrito() {
   const { user, admin } = useAuthContext();
+  const location = useLocation();
   const { productosCarrito, vaciarCarrito, borrarProductoCarrito } =
     useContext(CarritoContext);
   const navigate = useNavigate();
@@ -80,8 +81,9 @@ export default function Carrito() {
   if (admin) {
     return <Navigate to="/admin" replace />;
   }
+
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   if (productosCarrito.length === 0) {

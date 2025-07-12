@@ -23,6 +23,15 @@ const ImageWrapper = styled.div`
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
 `;
 
+// Componente estilizado para el contador centrado en móvil
+const ContadorWrapper = styled.div`
+  @media (max-width: 575.98px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+`;
+
 function ProductoDetalle() {
   const navegar = useNavigate();
   const { admin } = useAuthContext();
@@ -160,32 +169,34 @@ function ProductoDetalle() {
             <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 justify-content-center justify-content-lg-start">
               {!admin ? (
                 <>
-                  <div className="input-group" style={{ maxWidth: "150px" }}>
-                    <button
-                      className="btn btn-outline-light"
-                      type="button"
-                      onClick={restarContador}
-                    >
-                      -
-                    </button>
-                    <span
-                      className="form-control text-center fs-5"
-                      style={{
-                        backgroundColor: "var(--color-background-dark)",
-                        color: "var(--color-text-primary)",
-                        borderColor: "var(--color-border)",
-                      }}
-                    >
-                      {cantidad}
-                    </span>
-                    <button
-                      className="btn btn-outline-light"
-                      type="button"
-                      onClick={sumarContador}
-                    >
-                      +
-                    </button>
-                  </div>
+                  <ContadorWrapper>
+                    <div className="input-group" style={{ maxWidth: "150px" }}>
+                      <button
+                        className="btn btn-outline-light"
+                        type="button"
+                        onClick={restarContador}
+                      >
+                        -
+                      </button>
+                      <span
+                        className="form-control text-center fs-5"
+                        style={{
+                          backgroundColor: "var(--color-background-dark)",
+                          color: "var(--color-text-primary)",
+                          borderColor: "var(--color-border)",
+                        }}
+                      >
+                        {cantidad}
+                      </span>
+                      <button
+                        className="btn btn-outline-light"
+                        type="button"
+                        onClick={sumarContador}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </ContadorWrapper>
                   <StyledButton
                     onClick={funcionCarrito}
                     $variant="success"

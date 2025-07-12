@@ -15,8 +15,10 @@ function Features() {
   return (
     <div
       style={{
-        backgroundColor: "var(--color-background-light)",
+        // Quita el backgroundColor
         padding: "5rem 0",
+        // Añade un borde superior para separar del footer
+        borderTop: "1px solid var(--color-border)",
       }}
     >
       <div className="container">

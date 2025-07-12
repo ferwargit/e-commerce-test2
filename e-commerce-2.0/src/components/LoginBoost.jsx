@@ -1,7 +1,7 @@
 // src/components/LoginBoost.jsx
 import SEO from "./SEO";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { crearUsuario, loginEmailPass } from "../auth/firebase";
 import { dispararSweetBasico } from "../assets/SweetAlert";
@@ -15,17 +15,10 @@ function LoginBoost() {
 
   const { login, user, logout, admin } = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation(); // 2. Obtén la ubicación
 
-  // Las funciones de lógica no cambian
-  // const handleSubmitManual = (e) => {
-  //   e.preventDefault();
-  //   if (usuario === "admin" && password === "1234") {
-  //     login("admin");
-  //     navigate("/");
-  //   } else {
-  //     dispararSweetBasico("Credenciales incorrectas", "", "error", "Cerrar");
-  //   }
-  // };
+  // 3. Determinamos a dónde redirigir después del login
+  const from = location.state?.from?.pathname || "/";
 
   const registrarUsuario = (e) => {
     e.preventDefault();
@@ -52,7 +45,8 @@ function LoginBoost() {
       .then(() => {
         login(usuario);
         dispararSweetBasico("Logeo exitoso", "", "success", "Confirmar");
-        navigate("/");
+        // 4. Usamos nuestra nueva ruta de redirección dinámica
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         dispararSweetBasico(

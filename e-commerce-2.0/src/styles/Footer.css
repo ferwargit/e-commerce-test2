@@ -1,9 +1,0 @@
-/* src/styles/Footer.css */
-.main-footer {
-  background-color: #0d1117; /* Un negro-azulado un poco más oscuro que el fondo */
-  color: var(--color-text-muted);
-  padding: 1.5rem 0;
-  text-align: center;
-  border-top: 1px solid var(--color-border);
-  margin-top: auto; /* Esto es un seguro extra para que se pegue abajo */
-}
