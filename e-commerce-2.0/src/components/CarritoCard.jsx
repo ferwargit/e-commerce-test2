@@ -1,8 +1,8 @@
 // src/components/CarritoCard.jsx
+import React from "react";
 import { StyledButton } from "./Button";
 
-function CarritoCard({ producto, funcionDisparadora }) {
-  // Formateador de moneda para un look profesional
+function CarritoCard({ producto, onEliminar }) {
   const formatPrice = (value) =>
     new Intl.NumberFormat("es-AR", {
       style: "currency",
@@ -48,7 +48,7 @@ function CarritoCard({ producto, funcionDisparadora }) {
                 </p>
               </div>
               <StyledButton
-                onClick={() => funcionDisparadora(producto.id)}
+                onClick={() => onEliminar(producto.id, producto.name)}
                 $variant="danger"
                 style={{ padding: "5px 10px", fontSize: "14px" }}
               >
@@ -58,11 +58,10 @@ function CarritoCard({ producto, funcionDisparadora }) {
             <hr
               className="my-2"
               style={{
-                margin: "0.5rem 0", // Ajustamos el margen vertical
-                color: "inherit", // Hereda el color del texto
-                border: 0, // Quitamos el borde por defecto
-                borderTop: "1px solid var(--color-border)", // Creamos nuestro propio borde superior
-                opacity: 0.75, // Lo hacemos un poco más sutil
+                margin: "0.5rem 0",
+                border: 0,
+                borderTop: "1px solid var(--color-border)",
+                opacity: 0.75,
               }}
             />
             <div className="d-flex justify-content-between align-items-center">

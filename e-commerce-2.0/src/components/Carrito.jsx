@@ -15,41 +15,33 @@ export default function Carrito() {
     useContext(CarritoContext);
   const navigate = useNavigate();
 
-  // 1. CALCULAR SUBTOTAL
   const subtotal = productosCarrito.reduce(
     (total, producto) => total + producto.price * producto.cantidad,
     0
   );
 
-  // 2. LÓGICA DE CÁLCULO DE ENVÍO
   let costoEnvio = 0;
   if (subtotal > 0) {
-    // Solo se calcula si hay productos
     if (subtotal < 50000) {
       costoEnvio = 5000;
     } else if (subtotal >= 50000 && subtotal < 200000) {
       costoEnvio = 2500;
     } else {
-      // Para compras de $200.000 o más
       costoEnvio = 0;
     }
   }
 
-  // 3. CALCULAR TOTAL FINAL
   const totalFinal = subtotal + costoEnvio;
 
-  // Función para formatear precios
   const formatPrice = (value) =>
     new Intl.NumberFormat("es-AR", {
       style: "currency",
       currency: "ARS",
     }).format(value);
 
-  // 4. FUNCIÓN PARA MANEJAR EL PAGO
   const handleProcederAlPago = () => {
     ThemedSwal.fire({
       title: "Confirmar Pedido",
-      // Se usa el totalFinal para el mensaje
       html: `Estás a punto de confirmar tu compra por un total de <strong>${formatPrice(
         totalFinal
       )}</strong>.`,
@@ -66,7 +58,25 @@ export default function Carrito() {
     });
   };
 
-  // Redirecciones por rol
+  // --- NUEVA FUNCIÓN PARA MANEJAR LA ELIMINACIÓN ---
+  const handleEliminarProducto = (id, nombre) => {
+    ThemedSwal.fire({
+      title: "¿Quitar producto?",
+      text: `¿Seguro que quieres quitar "${nombre}" de tu carrito?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, quitar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "var(--color-danger)",
+      cancelButtonColor: "#4b5563",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        borrarProductoCarrito(id);
+        toast.info(`"${nombre}" fue eliminado de tu carrito.`);
+      }
+    });
+  };
+
   if (admin) {
     return <Navigate to="/admin" replace />;
   }
@@ -74,7 +84,6 @@ export default function Carrito() {
     return <Navigate to="/login" replace />;
   }
 
-  // Vista para Carrito Vacío
   if (productosCarrito.length === 0) {
     return (
       <div className="container text-center my-5">
@@ -104,7 +113,6 @@ export default function Carrito() {
     );
   }
 
-  // Vista del Carrito con productos
   return (
     <>
       <SEO title="Carrito de Compras" />
@@ -117,18 +125,17 @@ export default function Carrito() {
             Vaciar Carrito
           </StyledButton>
         </div>
-
         <div className="row g-5">
           <div className="col-lg-8">
             {productosCarrito.map((producto) => (
               <CarritoCard
                 key={producto.id}
                 producto={producto}
-                funcionDisparadora={borrarProductoCarrito}
+                // Pasamos la nueva función al componente hijo
+                onEliminar={handleEliminarProducto}
               />
             ))}
           </div>
-
           <div className="col-lg-4">
             <div
               className="card shadow-sm"
@@ -156,8 +163,6 @@ export default function Carrito() {
                     <span>Subtotal</span>
                     <span>{formatPrice(subtotal)}</span>
                   </li>
-
-                  {/* --- JSX ACTUALIZADO --- */}
                   <li
                     className="list-group-item d-flex justify-content-between"
                     style={{
@@ -187,7 +192,6 @@ export default function Carrito() {
                     <span>Total</span>
                     <span>{formatPrice(totalFinal)}</span>
                   </li>
-                  {/* --- FIN DEL JSX ACTUALIZADO --- */}
                 </ul>
                 <div className="d-grid mt-4">
                   <StyledButton

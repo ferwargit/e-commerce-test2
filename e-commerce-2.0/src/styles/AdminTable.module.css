@@ -17,32 +17,30 @@
   border-bottom-width: 2px;
 }
 
-/* --- INICIO DE LA LÓGICA RESPONSIVA --- */
+/* --- INICIO DE LA SOLUCIÓN RESPONSIVA PROFESIONAL --- */
 
 /* Estilos que se aplican SOLO en pantallas de menos de 768px */
 @media (max-width: 767.98px) {
-  /* 1. Ocultamos la cabecera de la tabla en móviles */
+  /* Ocultamos la cabecera de la tabla en móviles */
   .customTable thead {
     display: none;
   }
 
-  /* 2. Hacemos que cada fila se comporte como una tarjeta */
+  /* Cada fila se comporta como una tarjeta */
   .customTable tr {
     display: block;
     margin-bottom: 1rem;
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    background-color: var(
-      --color-background-light
-    ) !important; /* Forzamos el fondo */
+    background-color: var(--color-background-light) !important;
   }
 
-  /* 3. Las celdas se apilan verticalmente */
+  /* La celda ahora es un contenedor flex que separa la etiqueta del valor */
   .customTable td {
-    display: block;
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline; /* Alinea por la base del texto para un look limpio */
+    padding: 0.75rem 1rem;
     border: none;
     border-bottom: 1px solid var(--color-border);
   }
@@ -51,26 +49,27 @@
     border-bottom: none;
   }
 
-  /* 4. Añadimos las etiquetas de datos */
+  /* La etiqueta (generada por el 'before') se comporta como el primer item flex */
   .customTable td::before {
     content: attr(data-label);
-    position: absolute;
-    left: 1rem;
-    width: calc(50% - 2rem);
-    padding-right: 10px;
-    white-space: nowrap;
-    text-align: left;
     font-weight: 500;
     color: var(--color-text-muted);
+    padding-right: 1rem; /* Espacio entre la etiqueta y el valor */
   }
 
-  /* Celdas especiales que no necesitan etiqueta */
+  /* El valor del dato ahora está envuelto en un span con esta clase */
+  .cellValue {
+    text-align: right;
+    word-break: break-word; /* Permite que textos largos se rompan correctamente */
+    flex-shrink: 1; /* Permite que el valor se encoja si es necesario */
+  }
+
+  /* Celdas especiales (imagen y acciones) que no necesitan el layout de etiqueta/valor */
   .imageCell,
   .actionsCell {
-    padding-left: 0;
+    display: block;
     text-align: center;
   }
-
   .imageCell::before,
   .actionsCell::before {
     display: none;
