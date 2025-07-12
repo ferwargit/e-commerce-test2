@@ -78,7 +78,7 @@ function FormularioProducto() {
 
   // 2. Aquí está el nuevo JSX con el layout de Bootstrap
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
         <div className="col-lg-8 col-md-10">
           <div

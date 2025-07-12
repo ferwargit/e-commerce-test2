@@ -56,7 +56,7 @@ function LoginAdmin() {
           <div className="col-lg-6 col-md-8">
             <LoginForm
               title="Acceso de Administrador"
-              usernameLabel="Usuario:"
+              usernameLabel="Usuario"
               onSubmit={handleSubmit}
               buttonText="Ingresar"
               usuario={usuario}

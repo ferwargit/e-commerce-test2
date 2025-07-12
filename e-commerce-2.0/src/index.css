@@ -46,8 +46,9 @@ a:hover {
 
 /* Estilo para las etiquetas */
 label {
-  display: inline-block;
-  /* color: var(--color-text-primary); */
+  display: block; /* Cambiamos a block para que el text-align funcione correctamente */
+  width: 100%; /* Ocupa todo el ancho para centrarse bien */
+  text-align: center; /* ¡La clave! Centramos el texto de la etiqueta */
   color: var(--color-text-muted);
   font-weight: 500;
   margin-bottom: 0.5rem;

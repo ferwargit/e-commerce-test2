@@ -38,7 +38,7 @@ function LoginForm({
   title,
   onSubmit,
   buttonText,
-  usernameLabel = "Email:",
+  usernameLabel = "Email",
   usuario,
   setUsuario,
   password,
@@ -62,17 +62,17 @@ function LoginForm({
         <form onSubmit={onSubmit}>
           <div className="mb-3">
             <label
-              className="form-label d-block text-start"
+              className="form-label d-block"
             >
               {usernameLabel}
             </label>
             {/* 3. Reemplazamos el <input> por nuestro <StyledInput> */}
             <StyledInput
-              type={usernameLabel === "Email:" ? "email" : "text"}
+              type={usernameLabel === "Email" ? "email" : "text"}
               value={usuario}
               onChange={(e) => setUsuario(e.target.value)}
               placeholder={
-                usernameLabel === "Email:"
+                usernameLabel === "Email"
                   ? "Ingrese su email"
                   : "Ingrese su usuario"
               }
@@ -81,9 +81,9 @@ function LoginForm({
           </div>
           <div className="mb-4">
             <label
-              className="form-label d-block text-start"
+              className="form-label d-block"
             >
-              Contraseña:
+              Contraseña
             </label>
             {/* 4. Hacemos lo mismo para el input de contraseña */}
             <StyledInput
