@@ -28,9 +28,9 @@ function Nav() {
     0
   );
 
-  // Estilo para el NavLink que está activo
   const activeLinkStyle = {
     color: "var(--color-primary)",
+    textDecoration: "underline", // Mantengo el subrayado para el estilo activo que ya tenías
   };
 
   const handleBusquedaChange = (e) => {
@@ -41,10 +41,8 @@ function Nav() {
     }
   };
 
-  // --- SEPARANDO LA LÓGICA DE RENDERIZADO PARA MAYOR CLARIDAD ---
-
   const renderAdminNav = () => (
-    <>
+    <div className="collapse navbar-collapse" id="navContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
           <NavLink
@@ -76,7 +74,7 @@ function Nav() {
           <StyledInput
             type="search"
             placeholder="Buscar productos..."
-            value={terminoBusqueda}
+            value={terminoBusqueda} // <-- CORRECCIÓN AÑADIDA
             onChange={handleBusquedaChange}
           />
         </form>
@@ -115,11 +113,11 @@ function Nav() {
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 
   const renderClientNav = () => (
-    <>
+    <div className="collapse navbar-collapse" id="navContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
           <NavLink
@@ -175,7 +173,7 @@ function Nav() {
           <StyledInput
             type="search"
             placeholder="Buscar productos..."
-            value={terminoBusqueda}
+            value={terminoBusqueda} // <-- CORRECCIÓN AÑADIDA
             onChange={handleBusquedaChange}
           />
         </form>
@@ -219,14 +217,13 @@ function Nav() {
           ) : (
             <li className="nav-item">
               <NavLink className="nav-link" to="/login">
-                <RiLoginBoxLine className="me-1" />
-                Login
+                <RiLoginBoxLine className="me-1" /> Login
               </NavLink>
             </li>
           )}
         </ul>
       </div>
-    </>
+    </div>
   );
 
   const getNavContent = () => {

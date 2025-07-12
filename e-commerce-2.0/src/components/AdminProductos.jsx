@@ -6,11 +6,15 @@ import SEO from "./SEO";
 import { toast } from "react-toastify";
 import styles from "../styles/AdminTable.module.css";
 import ThemedSwal from "../assets/ThemedSwal";
+import Paginador from "./Paginador"; // Importamos el paginador
 
 function AdminProductos() {
-  const { productos, obtenerProductos, terminoBusqueda, eliminarProducto } =
-    useProductosContext();
+  const { productos, obtenerProductos, terminoBusqueda, eliminarProducto } = useProductosContext();
   const [cargando, setCargando] = useState(true);
+
+  // --- LÓGICA DE PAGINACIÓN ---
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(10); // 10 productos por página en la tabla
 
   const cargarProductos = useCallback(async () => {
     try {
@@ -25,6 +29,10 @@ function AdminProductos() {
   useEffect(() => {
     cargarProductos();
   }, [cargarProductos]);
+
+  useEffect(() => {
+    setCurrentPage(1); // Resetea la página al buscar
+  }, [terminoBusqueda]);
 
   const handleEliminar = (id, nombreProducto) => {
     ThemedSwal.fire({
@@ -50,22 +58,28 @@ function AdminProductos() {
     });
   };
 
-  // --- INICIO DE LA CORRECCIÓN ---
-
-  // Filtramos Y LUEGO ordenamos los productos en una sola cadena de métodos
   const productosFiltradosYOrdenados = productos
-    .filter((p) => p.name.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+    .filter((p) =>
+      p.name.toLowerCase().includes(terminoBusqueda.toLowerCase())
+    )
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  // --- FIN DE LA CORRECCIÓN ---
+  // --- CÁLCULOS PARA LA PÁGINA ACTUAL ---
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = productosFiltradosYOrdenados.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(productosFiltradosYOrdenados.length / productsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
 
   if (cargando) {
     return (
       <div className="text-center my-5">
         <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">
-            Cargando gestión de productos...
-          </span>
+          <span className="visually-hidden">Cargando gestión de productos...</span>
         </div>
         <p className="mt-2 text-light">Cargando gestión de productos...</p>
       </div>
@@ -82,16 +96,12 @@ function AdminProductos() {
     <>
       <SEO title="Gestión de Productos" />
       <div className="container mt-4">
-        <h1
-          className="mb-4 text-center"
-          style={{ color: "var(--color-text-primary)" }}
-        >
+        {/* El título se mantiene como estaba, con el color blanco */}
+        <h1 className="mb-4 text-center" style={{ color: "var(--color-text-primary)" }}>
           Gestión de Productos
         </h1>
         <div className="table-responsive">
-          <table
-            className={`table table-dark table-striped table-hover align-middle ${styles.customTable}`}
-          >
+          <table className={`table table-dark table-striped table-hover align-middle ${styles.customTable}`}>
             <thead className={styles.tableHeader}>
               <tr>
                 <th>Imagen</th>
@@ -101,26 +111,20 @@ function AdminProductos() {
               </tr>
             </thead>
             <tbody>
-              {productosFiltradosYOrdenados.map((producto) => (
+              {/* Mapeamos sobre los productos de la página actual */}
+              {currentProducts.map((producto) => (
                 <tr key={producto.id}>
                   <td data-label="Imagen" className={styles.imageCell}>
                     <img
                       src={producto.image}
                       alt={producto.name}
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        objectFit: "cover",
-                      }}
+                      style={{ width: "60px", height: "60px", objectFit: "cover" }}
                       className="rounded"
                     />
                   </td>
                   <td data-label="Nombre">{producto.name}</td>
                   <td data-label="Precio">{formatPrice(producto.price)}</td>
-                  <td
-                    data-label="Acciones"
-                    className={`${styles.actionsCell} text-end`}
-                  >
+                  <td data-label="Acciones" className={`${styles.actionsCell} text-end`}>
                     <div className="btn-group gap-2 justify-content-center justify-content-md-end">
                       <StyledLinkButton
                         to={`/admin/editarProducto/${producto.id}`}
@@ -130,9 +134,7 @@ function AdminProductos() {
                         Editar
                       </StyledLinkButton>
                       <StyledButton
-                        onClick={() =>
-                          handleEliminar(producto.id, producto.name)
-                        }
+                        onClick={() => handleEliminar(producto.id, producto.name)}
                         $variant="danger"
                         style={{ padding: "5px 10px", fontSize: "14px" }}
                       >
@@ -150,6 +152,16 @@ function AdminProductos() {
             No se encontraron productos con ese término de búsqueda.
           </p>
         )}
+        
+        {/* --- INICIO DE LA SECCIÓN DEL PAGINADOR --- */}
+        <div className="my-5">
+          <Paginador 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+        {/* --- FIN DE LA SECCIÓN DEL PAGINADOR --- */}
       </div>
     </>
   );

@@ -106,8 +106,10 @@ function ProductosContainer() {
 
           {productosFiltradosYOrdenados.length === 0 && !cargando && (
             <div className="col-12 text-center">
-              <h3>No se encontraron productos</h3>
-              <p className="text-muted">
+              <h3 style={{ color: "var(--color-text-primary)" }}>
+                No se encontraron productos
+              </h3>
+              <p style={{ color: "var(--color-text-muted)" }}>
                 Intenta con otro término de búsqueda.
               </p>
             </div>
