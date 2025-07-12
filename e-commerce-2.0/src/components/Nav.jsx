@@ -1,6 +1,6 @@
 // src/components/Nav.jsx
 
-import { useContext } from "react";
+import { useContext, useState } from "react"; // Importamos useState
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
@@ -23,6 +23,11 @@ function Nav() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // --- ESTADO PARA CONTROLAR EL MENÚ MÓVIL ---
+  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+  const closeMenu = () => setIsNavCollapsed(true);
+
   const totalItems = productosCarrito.reduce(
     (total, producto) => total + producto.cantidad,
     0
@@ -30,7 +35,6 @@ function Nav() {
 
   const activeLinkStyle = {
     color: "var(--color-primary)",
-    textDecoration: "underline", // Mantengo el subrayado para el estilo activo que ya tenías
   };
 
   const handleBusquedaChange = (e) => {
@@ -41,14 +45,20 @@ function Nav() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+  };
+
   const renderAdminNav = () => (
-    <div className="collapse navbar-collapse" id="navContent">
+    <>
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
           <NavLink
             className="nav-link"
             style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
             to="/"
+            onClick={closeMenu}
           >
             <BsFillHouseDoorFill className="me-2" />
             Inicio
@@ -59,6 +69,7 @@ function Nav() {
             className="nav-link"
             style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
             to="/productos"
+            onClick={closeMenu}
           >
             <BsBoxSeamFill className="me-2" />
             Productos
@@ -74,7 +85,7 @@ function Nav() {
           <StyledInput
             type="search"
             placeholder="Buscar productos..."
-            value={terminoBusqueda} // <-- CORRECCIÓN AÑADIDA
+            value={terminoBusqueda}
             onChange={handleBusquedaChange}
           />
         </form>
@@ -90,13 +101,21 @@ function Nav() {
           </a>
           <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end">
             <li>
-              <NavLink className="dropdown-item" to="/admin">
+              <NavLink
+                className="dropdown-item"
+                to="/admin"
+                onClick={closeMenu}
+              >
                 <RiAdminFill className="me-1" />
                 Panel
               </NavLink>
             </li>
             <li>
-              <NavLink className="dropdown-item" to="/admin/agregarProductos">
+              <NavLink
+                className="dropdown-item"
+                to="/admin/agregarProductos"
+                onClick={closeMenu}
+              >
                 <RiAddBoxFill className="me-1" />
                 Agregar Producto
               </NavLink>
@@ -105,7 +124,7 @@ function Nav() {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <Link className="dropdown-item" to="/" onClick={logout}>
+              <Link className="dropdown-item" to="/" onClick={handleLogout}>
                 <RiLoginBoxLine className="me-1" />
                 Cerrar Sesión
               </Link>
@@ -113,17 +132,18 @@ function Nav() {
           </ul>
         </div>
       </div>
-    </div>
+    </>
   );
 
   const renderClientNav = () => (
-    <div className="collapse navbar-collapse" id="navContent">
+    <>
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
           <NavLink
             className="nav-link"
             style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
             to="/"
+            onClick={closeMenu}
           >
             <BsFillHouseDoorFill className="me-2" />
             Inicio
@@ -134,6 +154,7 @@ function Nav() {
             className="nav-link"
             style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
             to="/productos"
+            onClick={closeMenu}
           >
             <BsBoxSeamFill className="me-2" />
             Productos
@@ -144,6 +165,7 @@ function Nav() {
             className="nav-link"
             style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
             to="/nosotros"
+            onClick={closeMenu}
           >
             <BsFillInfoCircleFill className="me-2" />
             Nosotros
@@ -154,6 +176,7 @@ function Nav() {
             className="nav-link"
             style={({ isActive }) => (isActive ? activeLinkStyle : undefined)}
             to="/contacto"
+            onClick={closeMenu}
           >
             <BsFillTelephoneFill className="me-2" />
             Contacto
@@ -173,13 +196,13 @@ function Nav() {
           <StyledInput
             type="search"
             placeholder="Buscar productos..."
-            value={terminoBusqueda} // <-- CORRECCIÓN AÑADIDA
+            value={terminoBusqueda}
             onChange={handleBusquedaChange}
           />
         </form>
         <ul className="navbar-nav d-flex flex-row justify-content-between w-100 w-lg-auto pt-3 pt-lg-0">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/carrito">
+            <NavLink className="nav-link" to="/carrito" onClick={closeMenu}>
               <FaShoppingCart />
               {totalItems > 0 && (
                 <span className="badge bg-primary ms-1">{totalItems}</span>
@@ -198,16 +221,16 @@ function Nav() {
                 <FaUserCircle className="me-1" /> {user.split("@")[0]}
               </a>
               <ul className="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                <li>
-                  <a className="dropdown-item" href="#">
+                {/* <li>
+                  <a className="dropdown-item" href="#" onClick={closeMenu}>
                     Mi Perfil
                   </a>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
-                </li>
+                </li> */}
                 <li>
-                  <Link className="dropdown-item" to="/" onClick={logout}>
+                  <Link className="dropdown-item" to="/" onClick={handleLogout}>
                     <RiLoginBoxLine className="me-1" />
                     Cerrar Sesión
                   </Link>
@@ -216,14 +239,15 @@ function Nav() {
             </li>
           ) : (
             <li className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                <RiLoginBoxLine className="me-1" /> Login
+              <NavLink className="nav-link" to="/login" onClick={closeMenu}>
+                <RiLoginBoxLine className="me-1" />
+                Login
               </NavLink>
             </li>
           )}
         </ul>
       </div>
-    </div>
+    </>
   );
 
   const getNavContent = () => {
@@ -235,23 +259,25 @@ function Nav() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/" onClick={closeMenu}>
           TechStore
         </Link>
         {!location.pathname.startsWith("/admin/login") && (
           <button
             className="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navContent"
+            onClick={handleNavCollapse} // Controlado por nuestro estado
             aria-controls="navContent"
-            aria-expanded="false"
+            aria-expanded={!isNavCollapsed}
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
         )}
-        <div className="collapse navbar-collapse" id="navContent">
+        <div
+          className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
+          id="navContent"
+        >
           {getNavContent()}
         </div>
       </div>
