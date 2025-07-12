@@ -87,6 +87,7 @@ function Nav() {
             placeholder="Buscar productos..."
             value={terminoBusqueda}
             onChange={handleBusquedaChange}
+            style={{ width: '240px' }}
           />
         </form>
         <div className="nav-item dropdown">
@@ -198,6 +199,7 @@ function Nav() {
             placeholder="Buscar productos..."
             value={terminoBusqueda}
             onChange={handleBusquedaChange}
+            style={{ width: '240px' }}
           />
         </form>
         <ul className="navbar-nav d-flex flex-row justify-content-between w-100 w-lg-auto pt-3 pt-lg-0">

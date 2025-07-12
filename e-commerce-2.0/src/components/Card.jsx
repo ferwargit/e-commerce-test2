@@ -27,8 +27,13 @@ const StyledCard = styled.div`
   &:hover {
     transform: translateY(-5px);
     border-color: var(--color-primary);
+
+    /* --- INICIO DE LA MEJORA DEL RESPLANDOR --- */
+    /* Apilamos una tercera sombra: un resplandor con nuestro color de marca */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.1);
+      0 4px 6px -2px rgba(0, 0, 0, 0.1), 0 0 12px rgba(20, 184, 166, 0.3); /* Resplandor de marca (Teal) */
+    /* --- FIN DE LA MEJORA DEL RESPLANDOR --- */
+
     ${CardImage} {
       transform: scale(1.05);
     }
@@ -56,16 +61,15 @@ const ImageContainer = styled.div`
 const CardBody = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* ¡ESTA LÍNEA ES CLAVE! Hace que el cuerpo de la tarjeta ocupe todo el espacio vertical disponible. */
-  padding: 1.5rem; /* Aumentamos el padding para más aire */
-  text-align: center; /* Centramos todo el texto por defecto */
+  flex-grow: 1;
+  padding: 1.5rem;
+  text-align: center;
 `;
 
 const CardTitle = styled.h5`
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
   font-weight: 500;
-  /* Reservamos espacio para al menos 2 líneas para evitar "saltos" de layout */
   min-height: 3rem;
   display: flex;
   align-items: center;
@@ -74,11 +78,11 @@ const CardTitle = styled.h5`
 
 const CardPrice = styled.p`
   color: var(--color-text-muted);
-  margin-bottom: 1.5rem; /* Más espacio antes del botón */
+  margin-bottom: 1.5rem;
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: auto; /* ¡ESTA ES LA OTRA CLAVE! Empuja el botón al final del contenedor flex. */
+  margin-top: auto;
 `;
 
 // --- COMPONENTE PRINCIPAL ---
@@ -96,12 +100,9 @@ function Card({ producto }) {
       </ImageContainer>
       <CardBody>
         <div>
-          {" "}
-          {/* Div extra para agrupar título y precio */}
           <CardTitle title={producto.name}>{producto.name}</CardTitle>
           <CardPrice>{formattedPrice}</CardPrice>
         </div>
-
         <ButtonWrapper>
           <StyledLinkButton to={"/productos/" + producto.id} $variant="primary">
             Ver Detalle

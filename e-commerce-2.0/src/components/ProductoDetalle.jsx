@@ -14,16 +14,13 @@ import styled from "styled-components";
 const ImageWrapper = styled.div`
   padding: 2rem;
   border-radius: 16px;
-
-  /* --- INICIO DE LA SOLUCIÓN: GRADIENTE LINEAL --- */
-  /* Aplicamos el mismo gradiente para una consistencia visual perfecta */
   background: linear-gradient(
     145deg,
     var(--color-background-light) 0%,
     var(--color-background-dark) 100%
   );
   border: 1px solid var(--color-border);
-  /* --- FIN DE LA SOLUCIÓN --- */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
 `;
 
 function ProductoDetalle() {
@@ -136,18 +133,18 @@ function ProductoDetalle() {
               <img
                 src={productoEncontrado.image}
                 alt={productoEncontrado.name}
-                className="img-fluid rounded"
+                className="img-fluid"
               />
             </ImageWrapper>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6 text-center text-lg-start">
             <h1
-              className="display-5 fw-bold"
+              className="display-4 fw-bold"
               style={{ color: "var(--color-text-primary)" }}
             >
               {productoEncontrado.name}
             </h1>
-            <p className="fs-3 my-3" style={{ color: "var(--color-primary)" }}>
+            <p className="fs-2 my-3" style={{ color: "var(--color-primary)" }}>
               {formattedPrice}
             </p>
             <p
@@ -160,55 +157,57 @@ function ProductoDetalle() {
               className="my-4"
               style={{ borderColor: "var(--color-border)" }}
             />
-            {!admin ? (
-              <div className="d-flex align-items-center gap-3">
-                <div className="input-group" style={{ maxWidth: "150px" }}>
-                  <button
-                    className="btn btn-outline-light"
-                    type="button"
-                    onClick={restarContador}
+            <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 justify-content-center justify-content-lg-start">
+              {!admin ? (
+                <>
+                  <div className="input-group" style={{ maxWidth: "150px" }}>
+                    <button
+                      className="btn btn-outline-light"
+                      type="button"
+                      onClick={restarContador}
+                    >
+                      -
+                    </button>
+                    <span
+                      className="form-control text-center fs-5"
+                      style={{
+                        backgroundColor: "var(--color-background-dark)",
+                        color: "var(--color-text-primary)",
+                        borderColor: "var(--color-border)",
+                      }}
+                    >
+                      {cantidad}
+                    </span>
+                    <button
+                      className="btn btn-outline-light"
+                      type="button"
+                      onClick={sumarContador}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <StyledButton
+                    onClick={funcionCarrito}
+                    $variant="success"
+                    className="flex-grow-1"
                   >
-                    -
-                  </button>
-                  <span
-                    className="form-control text-center fs-5"
-                    style={{
-                      backgroundColor: "var(--color-background-dark)",
-                      color: "var(--color-text-primary)",
-                      borderColor: "var(--color-border)",
-                    }}
+                    Agregar al Carrito
+                  </StyledButton>
+                </>
+              ) : (
+                <>
+                  <StyledLinkButton
+                    to={`/admin/editarProducto/${id}`}
+                    $variant="primary"
                   >
-                    {cantidad}
-                  </span>
-                  <button
-                    className="btn btn-outline-light"
-                    type="button"
-                    onClick={sumarContador}
-                  >
-                    +
-                  </button>
-                </div>
-                <StyledButton
-                  onClick={funcionCarrito}
-                  $variant="success"
-                  className="flex-grow-1"
-                >
-                  Agregar al Carrito
-                </StyledButton>
-              </div>
-            ) : (
-              <div className="d-grid gap-2 d-md-flex justify-content-center">
-                <StyledLinkButton
-                  to={`/admin/editarProducto/${id}`}
-                  $variant="primary"
-                >
-                  Editar Producto
-                </StyledLinkButton>
-                <StyledButton onClick={dispararEliminar} $variant="danger">
-                  Eliminar Producto
-                </StyledButton>
-              </div>
-            )}
+                    Editar Producto
+                  </StyledLinkButton>
+                  <StyledButton onClick={dispararEliminar} $variant="danger">
+                    Eliminar Producto
+                  </StyledButton>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
