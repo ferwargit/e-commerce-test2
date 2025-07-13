@@ -1,11 +1,12 @@
 // src/components/Contacto.jsx
-import { useState } from 'react'; // Importa useState
+import React, { useState } from 'react';
 import SEO from './SEO';
 import { StyledInput, StyledTextarea } from './StyledFormElements';
 import { StyledButton } from './Button';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
+// Sub-componente para cada item de información
 const InfoItem = ({ icon, title, children }) => (
   <div className="text-center mb-4">
     <div className="fs-1 mb-2" style={{ color: 'var(--color-primary)' }}>
@@ -17,7 +18,7 @@ const InfoItem = ({ icon, title, children }) => (
 );
 
 function Contacto() {
-  // 1. Estado para manejar los datos del formulario
+  // Estado para el formulario (necesario para Netlify con React)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,12 +28,14 @@ function Contacto() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  // 2. Nueva función de envío para Netlify
+  
+  // Función de envío para Netlify
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const formUrlEncoded = new URLSearchParams(formData).toString();
+    const formUrlEncoded = new URLSearchParams({
+        'form-name': 'contact', // Coincide con el 'name' del formulario
+        ...formData
+    }).toString();
 
     fetch("/", {
       method: "POST",
@@ -41,11 +44,10 @@ function Contacto() {
     })
     .then(() => {
       toast.success('¡Gracias por tu mensaje! Te contactaremos pronto.');
-      setFormData({ name: '', email: '', message: '' }); // Limpia el estado y los campos
+      setFormData({ name: '', email: '', message: '' }); // Limpia el formulario
     })
     .catch((error) => {
-      toast.error('Hubo un error al enviar tu mensaje. Por favor, intenta de nuevo.');
-      console.error(error);
+      toast.error('Hubo un error al enviar tu mensaje.');
     });
   };
 
@@ -53,45 +55,31 @@ function Contacto() {
     <>
       <SEO 
         title="Contacto" 
-        description="Ponte en contacto con el equipo de TechStore. Estamos aquí para ayudarte con cualquier consulta sobre nuestros productos y servicios."
+        description="Ponte en contacto con el equipo de TechStore. Estamos aquí para ayudarte con cualquier consulta."
       />
       <div className="container my-5 py-5">
         <div className="text-center mb-5">
-          <h1 className="display-4 fw-bold" style={{ color: "var(--color-text-primary)" }}>Contáctanos</h1>
+          <h1 className="display-4 fw-bold" style={{ color: 'var(--color-text-primary)' }}>Contáctanos</h1>
           <p className="lead" style={{ color: "var(--color-text-muted)" }}>
-            ¿Tienes alguna pregunta? No dudes en escribirnos.
+            ¿Tienes alguna pregunta? No dudes en escribirnos
           </p>
         </div>
 
+        {/* Restauramos el layout de dos columnas con alineación de altura */}
         <div className="row g-5 justify-content-center align-items-stretch">
+          
+          {/* Columna del Formulario */}
           <div className="col-lg-7">
-            <div
-              className="card h-100"
-              style={{
-                backgroundColor: "var(--color-background-light)",
-                border: "1px solid var(--color-border)",
-                borderRadius: "12px",
-              }}
-            >
+            <div className="card h-100" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)', borderRadius: '12px' }}>
               <div className="card-body p-4 d-flex flex-column">
                 <h3 className="h4 mb-4 text-center" style={{ color: "var(--color-text-primary)" }}>Formulario de Contacto</h3>
                 
-                {/* 3. Atributos de Netlify añadidos al formulario */}
+                {/* Formulario de React que envía los datos */}
                 <form 
-                  name="contact" 
-                  method="POST" 
-                  data-netlify="true" 
-                  data-netlify-honeypot="bot-field"
+                  name="contact"
                   onSubmit={handleSubmit} 
                   className="d-flex flex-column flex-grow-1"
                 >
-                  <p className="d-none">
-                    <label>
-                      No llenes esto si eres humano: <input name="bot-field" />
-                    </label>
-                  </p>
-                  
-                  {/* 4. Inputs y Textarea ahora son componentes controlados */}
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">Tu Nombre</label>
                     <StyledInput type="text" id="name" name="name" value={formData.name} onChange={handleChange} required placeholder="John Doe" />
@@ -112,6 +100,7 @@ function Contacto() {
             </div>
           </div>
 
+          {/* Columna de Información Directa */}
           <div className="col-lg-5">
             <div className="card h-100" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)', borderRadius: '12px' }}>
               <div className="card-body p-4 d-flex flex-column justify-content-center">
