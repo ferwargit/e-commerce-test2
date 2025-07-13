@@ -57,7 +57,7 @@ function Contacto() {
       />
       <div className="container my-5 py-5">
         <div className="text-center mb-5">
-          <h1 className="display-4 fw-bold">Contáctanos</h1>
+          <h1 className="display-4 fw-bold" style={{ color: "var(--color-text-primary)" }}>Contáctanos</h1>
           <p className="lead" style={{ color: "var(--color-text-muted)" }}>
             ¿Tienes alguna pregunta? No dudes en escribirnos.
           </p>
@@ -74,7 +74,7 @@ function Contacto() {
               }}
             >
               <div className="card-body p-4 d-flex flex-column">
-                <h3 className="h4 mb-4 text-center">Formulario de Contacto</h3>
+                <h3 className="h4 mb-4 text-center" style={{ color: "var(--color-text-primary)" }}>Formulario de Contacto</h3>
                 
                 {/* 3. Atributos de Netlify añadidos al formulario */}
                 <form 
@@ -88,7 +88,7 @@ function Contacto() {
                   <input type="hidden" name="form-name" value="contact" />
                   <p className="d-none">
                     <label>
-                      Don’t fill this out if you’re human: <input name="bot-field" />
+                      No llenes esto si eres humano: <input name="bot-field" />
                     </label>
                   </p>
                   
@@ -116,7 +116,7 @@ function Contacto() {
           <div className="col-lg-5">
             <div className="card h-100" style={{ backgroundColor: 'var(--color-background-light)', border: '1px solid var(--color-border)', borderRadius: '12px' }}>
               <div className="card-body p-4 d-flex flex-column justify-content-center">
-                <h3 className="h4 mb-4 text-center">Información Directa</h3>
+                <h3 className="h4 mb-4 text-center" style={{ color: "var(--color-text-primary)" }}>Información Directa</h3>
                 <InfoItem icon={<FaMapMarkerAlt />} title="Dirección">
                   Av. Siempreviva 742, Springfield
                 </InfoItem>
