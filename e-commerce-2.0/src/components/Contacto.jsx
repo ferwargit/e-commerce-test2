@@ -85,7 +85,6 @@ function Contacto() {
                   onSubmit={handleSubmit} 
                   className="d-flex flex-column flex-grow-1"
                 >
-                  <input type="hidden" name="form-name" value="contact" />
                   <p className="d-none">
                     <label>
                       No llenes esto si eres humano: <input name="bot-field" />
