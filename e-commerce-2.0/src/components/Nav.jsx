@@ -108,7 +108,7 @@ function Nav() {
                 onClick={closeMenu}
               >
                 <RiAdminFill className="me-1" />
-                Panel
+                Gestión de Productos
               </NavLink>
             </li>
             <li>

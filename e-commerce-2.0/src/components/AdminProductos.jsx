@@ -98,18 +98,22 @@ function AdminProductos() {
   return (
     <>
       <SEO title="Gestión de Productos" />
-      <div className="container mt-4">
-        <h1 className="mb-4 text-center" style={{ color: 'var(--color-text-primary)' }}>Gestión de Productos</h1>
-        <div className="table-responsive">
-          <table
-            className={`table table-dark table-striped table-hover align-middle ${styles.customTable}`}
-          >
+      <div className="container-lg my-5">
+        <h1
+          className="mb-5 text-center"
+          style={{ color: "var(--color-text-primary)" }}
+        >
+          Gestión de Productos
+        </h1>
+
+        <div>
+          <table className={`w-100 ${styles.customTable}`}>
             <thead className={styles.tableHeader}>
               <tr>
                 <th>Imagen</th>
                 <th>Nombre</th>
-                <th>Precio</th>
-                <th className="text-end">Acciones</th>
+                <th className={styles.priceHeader}>Precio</th>
+                <th className={styles.actionsHeader}>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -130,16 +134,15 @@ function AdminProductos() {
                   <td data-label="Nombre">
                     <span className={styles.cellValue}>{producto.name}</span>
                   </td>
-                  <td data-label="Precio">
+                  <td data-label="Precio" className={styles.priceCell}>
                     <span className={styles.cellValue}>
                       {formatPrice(producto.price)}
                     </span>
                   </td>
-                  <td
-                    data-label="Acciones"
-                    className={`${styles.actionsCell} text-end`}
-                  >
-                    <div className="btn-group gap-2 justify-content-center justify-content-md-end">
+                  {/* <td data-label="Acciones" className={styles.actionsCell}> */}
+                  <td data-label="Acciones">
+                    {/* <div className="btn-group gap-2 d-flex justify-content-center"> */}
+                    <div className="btn-group d-flex justify-content-center">
                       <StyledLinkButton
                         to={`/admin/editarProducto/${producto.id}`}
                         $variant="primary"
@@ -163,6 +166,7 @@ function AdminProductos() {
             </tbody>
           </table>
         </div>
+
         {productosFiltradosYOrdenados.length === 0 && (
           <p className="text-center mt-3 text-muted">
             No se encontraron productos con ese término de búsqueda.
